@@ -6,11 +6,27 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
-let isEditProfilePopupOpen = false
-let isAddPlacePopupOpen = false
-let isEditAvatarPopupOpen = false
-
 function App() {
+
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen)
+  }
+
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(!isAddPlacePopupOpen)
+  }
+
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)
+  }
+
+
   return (
     <>
       <div className="page">
@@ -18,7 +34,8 @@ function App() {
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}/>
         <Footer/>
-        <PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}>
+        <PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}
+                       isOpen={isEditProfilePopupOpen}>
           <input
             className="popup__input popup__input_type_name"
             name="popup-name"
@@ -57,7 +74,8 @@ function App() {
           </div>
 
         </PopupWithForm>
-        <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}>
+        <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
+                       isOpen={isAddPlacePopupOpen}>
           <input
             className="popup__input popup__input_type_place-name"
             placeholder="Название"
@@ -93,7 +111,8 @@ function App() {
             />
           </div>
         </PopupWithForm>
-        <PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={"Сохранить"}>
+        <PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={"Сохранить"}
+                       isOpen={isEditAvatarPopupOpen}>
           <input
             className="popup__input popup__input_type_avatar-url"
             placeholder="Ссылка на аватар"
@@ -115,27 +134,9 @@ function App() {
         </PopupWithForm>
         <ImagePopup/>
       </div>
-      {/*<template id="card-template"/>*/}
     </>
-
   );
 }
 
-function handleEditProfileClick() {
-  document.querySelector('.popup_type_profile-form').classList.add('popup_open')
-  isEditProfilePopupOpen = true
-}
-
-function handleEditAvatarClick() {
-  document.querySelector('.popup_type_avatar-form').classList.add('popup_open')
-  isAddPlacePopupOpen = true
-
-}
-
-function handleAddPlaceClick() {
-  document.querySelector('.popup_type_card-form').classList.add('popup_open')
-  isEditAvatarPopupOpen = true
-
-}
 
 export default App;
