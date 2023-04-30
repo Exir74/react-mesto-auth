@@ -3,11 +3,11 @@ import editAvatarImg from "../image/editAvatar.png"
 import editButtonImg from "../image/Edit-Button.svg"
 import addButtonS from "../image/Add-Button-S.svg"
 import addButtonL from "../image/Add-Button-L.svg"
-function Main (){
+function Main (props){
   return(
     <main className="main-content">
       <section className="profile">
-        <button type="button" onClick={handleEditAvatarClick} className="profile__edit">
+        <button type="button" onClick={props.onEditAvatar} className="profile__edit">
           <img className="profile__avatar" alt="Аватар" />
           <div className="profile__avatar-wrapper hover">
             <img
@@ -20,7 +20,7 @@ function Main (){
         <div className="profile__info">
           <h1 className="profile__name">Жак-Ив Кусто</h1>
           <p className="profile__subtitle">Исследователь океана</p>
-          <button type="button" onClick={handleEditProfileClick} className="profile__edit-button hover">
+          <button type="button" onClick={props.onEditProfile} className="profile__edit-button hover">
             <img
               className="profile__edit-image prof"
               src={editButtonImg}
@@ -28,7 +28,7 @@ function Main (){
             />
           </button>
         </div>
-        <button type="button" onClick={handleAddPlaceClick} className="profile__add-button hover">
+        <button type="button" onClick={props.onAddPlace} className="profile__add-button hover">
           <picture>
             <source
               srcSet={addButtonS}
@@ -48,14 +48,14 @@ function Main (){
 }
 export default Main
 
-function handleEditProfileClick(){
-document.querySelector('.profile-popup').classList.add('popup_open')
-}
-function handleEditAvatarClick(){
-  document.querySelector('.avatar-popup').classList.add('popup_open')
-
-}
-function handleAddPlaceClick(){
-  document.querySelector('.card-popup').classList.add('popup_open')
-
-}
+// function handleEditProfileClick(){
+// document.querySelector('.popup_type_profile-form').classList.add('popup_open')
+// }
+// function handleEditAvatarClick(){
+//   document.querySelector('.popup_type_avatar-form').classList.add('popup_open')
+//
+// }
+// function handleAddPlaceClick(){
+//   document.querySelector('.popup_type_card-form').classList.add('popup_open')
+//
+// }
