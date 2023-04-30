@@ -1,10 +1,9 @@
 import closeIcon from "../image/Close-Icon.svg";
 import React from "react";
 
-function PopupWithForm(props){
-  console.log(props.isOpen)
-  return(
-    <div className={`popup popup_type_${props.name}`} >
+function PopupWithForm(props) {
+  return (
+    <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">
         <button type="button" className="popup__close hover">
           <img
@@ -29,4 +28,5 @@ function PopupWithForm(props){
     </div>
   )
 }
+
 export default PopupWithForm
