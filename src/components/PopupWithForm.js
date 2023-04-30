@@ -5,7 +5,7 @@ function PopupWithForm(props) {
   return (
     <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">
-        <button type="button" className="popup__close hover">
+        <button type="button" onClick={'aaa'} className="popup__close hover">
           <img
             className="popup__close-icon"
             src={closeIcon}

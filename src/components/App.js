@@ -25,7 +25,9 @@ function App() {
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)
   }
+function closeAllPopups(){
 
+}
 
   return (
     <>
