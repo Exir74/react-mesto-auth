@@ -1,64 +1,24 @@
 import React from "react";
-import logo from './image/logo.svg'
-import './index.css';
+import '../index.css';
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
+import closeIcon from "../image/Close-Icon.svg"
+
 
 function App() {
   return (
     <>
       <div className="page">
-        <header className="header">
-          <a href="#">
-            <img className="header__logo hover" src={logo} alt={"лого"}/>
-          </a>
-        </header>
-        <main className="main-content">
-          <section className="profile">
-            <button type="button" className="profile__edit">
-              <img className="profile__avatar" alt="Аватар" />
-              <div className="profile__avatar-wrapper hover">
-                <img
-                  className="profile__edit-avatar hover"
-                  src="<%=require('../image/editAvatar.png')%>"
-                  alt="Аватар"
-                />
-              </div>
-            </button>
-            <div className="profile__info">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
-              <p className="profile__subtitle">Исследователь океана</p>
-              <button type="button" className="profile__edit-button hover">
-                <img
-                  className="profile__edit-image prof"
-                  src="<%=require('../image/Edit-Button.svg')%>"
-                  alt="изменить"
-                />
-              </button>
-            </div>
-            <button type="button" className="profile__add-button hover">
-              <picture>
-                <source
-                  srcSet="<%=require('../image/Add-Button-S.svg')%>"
-                  media="(min-width: 708px)"
-                />
-                <img
-                  className="profile__add-image"
-                  src="<%=require('../image/Add-Button-L.svg')%>"
-                  alt="добавить"
-                />
-              </picture>
-            </button>
-          </section>
-          <section className="cards" />
-        </main>
-        <footer className="footer">
-          <p className="footer__copyright">© 2022 Mesto Russia</p>
-        </footer>
+        <Header/>
+        <Main/>
+        <Footer/>
         <div className="popup profile-popup">
           <div className="popup__content">
             <button type="button" className="popup__close hover">
               <img
                 className="popup__close-icon"
-                src="<%=require('../image/Close-Icon.svg')%>"
+                src={closeIcon}
                 alt="закрыть"
               />
             </button>
@@ -116,7 +76,7 @@ function App() {
             <button type="button" className="popup__close hover">
               <img
                 className="popup__close-icon"
-                src="<%=require('../image/Close-Icon.svg')%>"
+                src={closeIcon}
                 alt="закрыть"
               />
             </button>
@@ -172,7 +132,7 @@ function App() {
             <button type="button" className="popup__close hover">
               <img
                 className="popup__close-icon"
-                src="<%=require('../image/Close-Icon.svg')%>"
+                src={closeIcon}
                 alt="закрыть"
               />
             </button>
@@ -189,7 +149,7 @@ function App() {
             <button type="button" className="popup__close hover">
               <img
                 className="popup__close-icon"
-                src="<%=require('../image/Close-Icon.svg')%>"
+                src={closeIcon}
                 alt="закрыть"
               />
             </button>
@@ -206,7 +166,7 @@ function App() {
             <button type="button" className="popup__close hover">
               <img
                 className="popup__close-icon"
-                src="<%=require('../image/Close-Icon.svg')%>"
+                src={closeIcon}
                 alt="закрыть"
               />
             </button>
