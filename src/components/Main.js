@@ -4,21 +4,59 @@ import editButtonImg from "../image/Edit-Button.svg"
 import addButtonS from "../image/Add-Button-S.svg"
 import addButtonL from "../image/Add-Button-L.svg"
 import {api} from "../utils/api";
-function Main (props){
-  const [userName, setUserName] = React.useState('')
-  React.useEffect(()=>{
-    function handleUserName (){
-      setUserName(api.getUserInformation.name)
+
+function Main(props) {
+  const [userName, setUserName] = React.useState('Жак-Ив Кусто')
+  const [userDescription, setUserDescription] = React.useState('Иследователь')
+  const [userAvatar, setUserAvatar] = React.useState('Иследователь')
+  const [cards, setCards] = React.useState([])
+
+  React.useEffect(() => {
+    function handleUserInfo() {
+      api.getUserInformation().then((res) => {
+        setUserName(res.name)
+        setUserDescription(res.about)
+        setUserAvatar(res.avatar)
+      })
+        .catch((err) => {
+          console.log(err)
+        })
     }
+
+    handleUserInfo()
   })
 
-  console.log(userName)
+  React.useEffect(() => {
+    function handleInitialCards() {
+      api.getInitialCards().then((res) => {
+        res.map((card) => (
+          <div key={card._id} className="cards__item card">
+            <button type="button" className="card__trash hover"></button>
+            <button type="button" className="card__button">
+              <img className="card__image" src={card.link}/>
+            </button>
+            <div className="card__footer">
+              <h2 className="card__caption">{card.name}</h2>
+              <div className="card__like-wrapper">
+                <button type="button" className="card__like"></button>
+                <p className="card__like-quantity">{card.likes.length}</p>
+              </div>
+            </div>
+          </div>
+        ))
+      })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
 
-  return(
+    handleInitialCards()
+  })
+  return (
     <main className="main-content">
       <section className="profile">
         <button type="button" onClick={props.onEditAvatar} className="profile__edit">
-          <img className="profile__avatar" alt="Аватар" />
+          <img className="profile__avatar" alt="Аватар" src={userAvatar}/>
           <div className="profile__avatar-wrapper hover">
             <img
               className="profile__edit-avatar hover"
@@ -29,7 +67,7 @@ function Main (props){
         </button>
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
-          <p className="profile__subtitle">Исследователь океана</p>
+          <p className="profile__subtitle">{userDescription}</p>
           <button type="button" onClick={props.onEditProfile} className="profile__edit-button hover">
             <img
               className="profile__edit-image prof"
@@ -52,8 +90,9 @@ function Main (props){
           </picture>
         </button>
       </section>
-      <section className="cards" />
+      <section className="cards"/>
     </main>
   )
 }
+
 export default Main
