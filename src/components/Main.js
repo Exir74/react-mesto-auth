@@ -3,7 +3,17 @@ import editAvatarImg from "../image/editAvatar.png"
 import editButtonImg from "../image/Edit-Button.svg"
 import addButtonS from "../image/Add-Button-S.svg"
 import addButtonL from "../image/Add-Button-L.svg"
+import {api} from "../utils/api";
 function Main (props){
+  const [userName, setUserName] = React.useState('')
+  React.useEffect(()=>{
+    function handleUserName (){
+      setUserName(api.getUserInformation.name)
+    }
+  })
+
+  console.log(userName)
+
   return(
     <main className="main-content">
       <section className="profile">
@@ -18,7 +28,7 @@ function Main (props){
           </div>
         </button>
         <div className="profile__info">
-          <h1 className="profile__name">Жак-Ив Кусто</h1>
+          <h1 className="profile__name">{userName}</h1>
           <p className="profile__subtitle">Исследователь океана</p>
           <button type="button" onClick={props.onEditProfile} className="profile__edit-button hover">
             <img
@@ -47,15 +57,3 @@ function Main (props){
   )
 }
 export default Main
-
-// function handleEditProfileClick(){
-// document.querySelector('.popup_type_profile-form').classList.add('popup_open')
-// }
-// function handleEditAvatarClick(){
-//   document.querySelector('.popup_type_avatar-form').classList.add('popup_open')
-//
-// }
-// function handleAddPlaceClick(){
-//   document.querySelector('.popup_type_card-form').classList.add('popup_open')
-//
-// }
