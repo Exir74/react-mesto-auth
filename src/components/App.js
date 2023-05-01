@@ -25,9 +25,13 @@ function App() {
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)
   }
-function closeAllPopups(){
 
-}
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false)
+    setIsAddPlacePopupOpen( false)
+    setIsEditProfilePopupOpen( false)
+
+  }
 
   return (
     <>
@@ -37,7 +41,9 @@ function closeAllPopups(){
               onEditAvatar={handleEditAvatarClick}/>
         <Footer/>
         <PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}
-                       isOpen={isEditProfilePopupOpen}>
+                       isOpen={isEditProfilePopupOpen}
+                       onClose={closeAllPopups}>
+
           <input
             className="popup__input popup__input_type_name"
             name="popup-name"
@@ -77,7 +83,8 @@ function closeAllPopups(){
 
         </PopupWithForm>
         <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
-                       isOpen={isAddPlacePopupOpen}>
+                       isOpen={isAddPlacePopupOpen}
+                       onClose={closeAllPopups}>
           <input
             className="popup__input popup__input_type_place-name"
             placeholder="Название"
@@ -114,7 +121,8 @@ function closeAllPopups(){
           </div>
         </PopupWithForm>
         <PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={"Сохранить"}
-                       isOpen={isEditAvatarPopupOpen}>
+                       isOpen={isEditAvatarPopupOpen}
+                       onClose={closeAllPopups}>
           <input
             className="popup__input popup__input_type_avatar-url"
             placeholder="Ссылка на аватар"
@@ -139,7 +147,6 @@ function closeAllPopups(){
     </>
   );
 }
-
 
 
 export default App;
