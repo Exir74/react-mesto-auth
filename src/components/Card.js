@@ -1,7 +1,7 @@
 import React from "react";
 
 function Card(props) {
-  return (<div key={props.card._id} className="cards__item card">
+  return (<div className="cards__item card">
     <button type="button" className="card__trash hover"></button>
     <button type="button" className="card__button">
       <img className="card__image" src={props.card.link} alt={props.card.name}/>

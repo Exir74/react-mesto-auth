@@ -30,12 +30,11 @@ function Main(props) {
   }, [])
   React.useEffect(() => {
     function handleInitialCards() {
-      console.log('dd')
       api.getInitialCards().then(res => {
         setCards(
           res.map(card => {
             return (
-              <Card card={card}/>
+              <Card card={card} key={card._id}/>
             )
           }))
       })
