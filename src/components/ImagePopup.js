@@ -3,7 +3,7 @@ import React from "react";
 
 function ImagePopup(props){
   return(
-    <div className={`popup image-popup ${props.card.isOpen ? 'popup_open' : ''}`}>
+    <div className={`popup image-popup ${props.card.isCardPopupOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">
         <button type="button" onClick={props.onClose} className="popup__close hover">
           <img
