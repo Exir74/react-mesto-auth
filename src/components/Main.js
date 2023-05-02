@@ -11,6 +11,7 @@ function Main(props) {
   const [userAvatar, setUserAvatar] = React.useState('Иследователь')
   const [cards, setCards] = React.useState([])
 
+
   React.useEffect(() => {
     function handleUserInfo() {
       api.getUserInformation().then((res) => {
@@ -24,26 +25,29 @@ function Main(props) {
     }
 
     handleUserInfo()
-  })
-
+  }, [])
   React.useEffect(() => {
     function handleInitialCards() {
-      api.getInitialCards().then((res) => {
-        res.map((card) => (
-          <div key={card._id} className="cards__item card">
-            <button type="button" className="card__trash hover"></button>
-            <button type="button" className="card__button">
-              <img className="card__image" src={card.link}/>
-            </button>
-            <div className="card__footer">
-              <h2 className="card__caption">{card.name}</h2>
-              <div className="card__like-wrapper">
-                <button type="button" className="card__like"></button>
-                <p className="card__like-quantity">{card.likes.length}</p>
+      console.log('dd')
+      api.getInitialCards().then(res => {
+        setCards(
+        res.map(card => {
+          return(
+              <div key={card._id} className="cards__item card">
+                <button type="button" className="card__trash hover"></button>
+                <button type="button" className="card__button">
+                  <img className="card__image" src={card.link} alt={card.name}/>
+                </button>
+                <div className="card__footer">
+                  <h2 className="card__caption">{card.name}</h2>
+                  <div className="card__like-wrapper">
+                    <button type="button" className="card__like"></button>
+                    <p className="card__like-quantity">{card.likes.length}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))
+            )
+        }))
       })
         .catch((err) => {
           console.log(err)
@@ -51,7 +55,8 @@ function Main(props) {
     }
 
     handleInitialCards()
-  })
+  }, [])
+
   return (
     <main className="main-content">
       <section className="profile">
@@ -90,7 +95,9 @@ function Main(props) {
           </picture>
         </button>
       </section>
-      <section className="cards"/>
+      <section className="cards">
+        {cards}
+      </section>
     </main>
   )
 }
