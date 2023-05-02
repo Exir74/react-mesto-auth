@@ -1,9 +1,13 @@
 import React from "react";
 
 function Card(props) {
+  function handleClick() {
+    props.onCardClick(props.card)
+  }
+
   return (<div className="cards__item card">
     <button type="button" className="card__trash hover"></button>
-    <button type="button" className="card__button">
+    <button type="button" onClick={handleClick} className="card__button">
       <img className="card__image" src={props.card.link} alt={props.card.name}/>
     </button>
     <div className="card__footer">

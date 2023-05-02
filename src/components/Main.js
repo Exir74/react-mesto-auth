@@ -34,7 +34,7 @@ function Main(props) {
         setCards(
           res.map(card => {
             return (
-              <Card card={card} key={card._id}/>
+              <Card card={card} key={card._id} isOpen={props.isOpen} onCardClick={props.onCardClick}/>
             )
           }))
       })

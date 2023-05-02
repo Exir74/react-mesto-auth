@@ -28,9 +28,11 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState(false)
 
-  function handleCardClick() {
+  function handleCardClick(card) {
+    console.log(card)
     setSelectedCard(!selectedCard)
   }
+
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
@@ -47,7 +49,6 @@ function App() {
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
               isOpen={selectedCard}
-              onClose={closeAllPopups}
               onCardClick={handleCardClick}
         />
 
