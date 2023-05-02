@@ -47,7 +47,7 @@ function App() {
         <Header/>
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
-              isOpen={selectedCard}
+              isCardPopupOpen={selectedCard}
               onCardClick={handleCardClick}
         />
 
