@@ -4,6 +4,8 @@ import editButtonImg from "../image/Edit-Button.svg"
 import addButtonS from "../image/Add-Button-S.svg"
 import addButtonL from "../image/Add-Button-L.svg"
 import {api} from "../utils/api";
+import Card from "./Card";
+
 
 function Main(props) {
   const [userName, setUserName] = React.useState('Жак-Ив Кусто')
@@ -31,23 +33,11 @@ function Main(props) {
       console.log('dd')
       api.getInitialCards().then(res => {
         setCards(
-        res.map(card => {
-          return(
-              <div key={card._id} className="cards__item card">
-                <button type="button" className="card__trash hover"></button>
-                <button type="button" className="card__button">
-                  <img className="card__image" src={card.link} alt={card.name}/>
-                </button>
-                <div className="card__footer">
-                  <h2 className="card__caption">{card.name}</h2>
-                  <div className="card__like-wrapper">
-                    <button type="button" className="card__like"></button>
-                    <p className="card__like-quantity">{card.likes.length}</p>
-                  </div>
-                </div>
-              </div>
+          res.map(card => {
+            return (
+              <Card card={card}/>
             )
-        }))
+          }))
       })
         .catch((err) => {
           console.log(err)

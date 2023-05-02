@@ -28,8 +28,8 @@ function App() {
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
-    setIsAddPlacePopupOpen( false)
-    setIsEditProfilePopupOpen( false)
+    setIsAddPlacePopupOpen(false)
+    setIsEditProfilePopupOpen(false)
 
   }
 
