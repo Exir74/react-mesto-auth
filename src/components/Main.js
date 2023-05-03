@@ -7,7 +7,6 @@ import {api} from "../utils/api";
 import Card from "./Card";
 
 
-
 function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const [userName, setUserName] = React.useState('Жак-Ив Кусто')
   const [userDescription, setUserDescription] = React.useState('Иследователь')

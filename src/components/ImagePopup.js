@@ -1,8 +1,8 @@
 import closeIcon from "../image/Close-Icon.svg";
 import React from "react";
 
-function ImagePopup({card, onClose}){
-  return(
+function ImagePopup({card, onClose}) {
+  return (
     <div className={`popup image-popup ${Object.keys(card).length !== 0 ? 'popup_open' : ''}`}>
       <div className="popup__content">
         <button type="button" onClick={onClose} className="popup__close hover">
@@ -22,4 +22,5 @@ function ImagePopup({card, onClose}){
     </div>
   )
 }
+
 export default ImagePopup
