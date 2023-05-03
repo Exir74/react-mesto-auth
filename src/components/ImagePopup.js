@@ -2,6 +2,7 @@ import closeIcon from "../image/Close-Icon.svg";
 import React from "react";
 
 function ImagePopup(props){
+  console.log(props.card===true, props)
   return(
     <div className={`popup image-popup ${props.card.isCardPopupOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">

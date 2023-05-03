@@ -11,25 +11,25 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
 
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(!isEditProfilePopupOpen)
+    setIsEditProfilePopupOpen(true)
   }
 
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
 
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(!isAddPlacePopupOpen)
+    setIsAddPlacePopupOpen(true)
   }
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
 
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)
+    setIsEditAvatarPopupOpen(true)
   }
 
-  const [selectedCard, setSelectedCard] = React.useState({isCardPopupOpen: false})
+  const [selectedCard, setSelectedCard] = React.useState({})
 
   function handleCardClick(card) {
-    setSelectedCard({isCardPopupOpen: true, ...card})
+    setSelectedCard(card)
   }
 
 
