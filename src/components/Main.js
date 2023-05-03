@@ -7,7 +7,7 @@ import {api} from "../utils/api";
 import Card from "./Card";
 
 
-function Main({onEditProfile,onAddPlace,onEditAvatar,onCardClick}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const [userName, setUserName] = React.useState('Жак-Ив Кусто')
   const [userDescription, setUserDescription] = React.useState('Иследователь')
   const [userAvatar, setUserAvatar] = React.useState('Иследователь')
@@ -15,7 +15,7 @@ function Main({onEditProfile,onAddPlace,onEditAvatar,onCardClick}) {
 
 
   React.useEffect(() => {
-    function handleUserInfo() {
+
       api.getUserInformation().then((res) => {
         setUserName(res.name)
         setUserDescription(res.about)
@@ -24,28 +24,23 @@ function Main({onEditProfile,onAddPlace,onEditAvatar,onCardClick}) {
         .catch((err) => {
           console.log(err)
         })
-    }
 
-    handleUserInfo()
   }, [])
   React.useEffect(() => {
-    function handleInitialCards() {
-      api.getInitialCards().then(res => {
-        setCards(
-          res.map(card => {
-            return (
-              <Card card={card} key={card._id} onCardClick={onCardClick}/>
-            )
-          }))
+    api.getInitialCards().then(res => {
+      setCards(
+        res
+        // res.map(card => {
+        //   return (
+        //     card
+        //   )
+        // })
+      )
+    })
+      .catch((err) => {
+        console.log(err)
       })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-
-    handleInitialCards()
   }, [])
-
   return (
     <main className="main-content">
       <section className="profile">
@@ -85,7 +80,8 @@ function Main({onEditProfile,onAddPlace,onEditAvatar,onCardClick}) {
         </button>
       </section>
       <section className="cards">
-        {cards}
+        {/*{cards}*/}
+        <Card cards={cards} onCardClick={onCardClick}/>
       </section>
     </main>
   )
