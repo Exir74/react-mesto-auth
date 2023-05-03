@@ -1,4 +1,5 @@
-# Mesto (sprint-10)
+# Mesto-react (sprint-10)
+### https://exir74.github.io/mesto-react/
 
 [//]: # (# https://exir74.github.io/mesto-react/)
 **Десятая проектная работа в рамках курса Веб-разработчик от Яндекс**
