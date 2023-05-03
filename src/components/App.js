@@ -32,7 +32,6 @@ function App() {
     setSelectedCard(card)
   }
 
-
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
@@ -46,7 +45,6 @@ function App() {
       <Header/>
       <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
-            isCardPopupOpen={selectedCard}
             onCardClick={handleCardClick}
       />
 

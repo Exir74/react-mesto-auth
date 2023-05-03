@@ -1,11 +1,11 @@
 import closeIcon from "../image/Close-Icon.svg";
 import React from "react";
 
-function PopupWithForm(props) {
+function PopupWithForm({name, isOpen, onClose, title, buttonText, children}) {
   return (
-    <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_open' : ''}`}>
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">
-        <button type="button" onClick={props.onClose} className="popup__close hover">
+        <button type="button" onClick={onClose} className="popup__close hover">
           <img
             className="popup__close-icon"
             src={closeIcon}
@@ -14,14 +14,14 @@ function PopupWithForm(props) {
         </button>
         <form
           method="get"
-          name={props.name}
+          name={name}
           className="popup__form"
           noValidate=""
         >
-          <h3 className="popup__title">{props.title}</h3>
-          {props.children}
+          <h3 className="popup__title">{title}</h3>
+          {children}
           <button type="submit" className="popup__button">
-            {props.buttonText}
+            {buttonText}
           </button>
         </form>
       </div>

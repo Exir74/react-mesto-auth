@@ -7,7 +7,7 @@ import {api} from "../utils/api";
 import Card from "./Card";
 
 
-function Main(props) {
+function Main({onEditProfile,onAddPlace,onEditAvatar,onCardClick}) {
   const [userName, setUserName] = React.useState('Жак-Ив Кусто')
   const [userDescription, setUserDescription] = React.useState('Иследователь')
   const [userAvatar, setUserAvatar] = React.useState('Иследователь')
@@ -34,7 +34,7 @@ function Main(props) {
         setCards(
           res.map(card => {
             return (
-              <Card card={card} key={card._id} isOpen={props.isOpen} onCardClick={props.onCardClick}/>
+              <Card card={card} key={card._id} onCardClick={onCardClick}/>
             )
           }))
       })
@@ -49,7 +49,7 @@ function Main(props) {
   return (
     <main className="main-content">
       <section className="profile">
-        <button type="button" onClick={props.onEditAvatar} className="profile__edit">
+        <button type="button" onClick={onEditAvatar} className="profile__edit">
           <img className="profile__avatar" alt="Аватар" src={userAvatar}/>
           <div className="profile__avatar-wrapper hover">
             <img
@@ -62,7 +62,7 @@ function Main(props) {
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
           <p className="profile__subtitle">{userDescription}</p>
-          <button type="button" onClick={props.onEditProfile} className="profile__edit-button hover">
+          <button type="button" onClick={onEditProfile} className="profile__edit-button hover">
             <img
               className="profile__edit-image prof"
               src={editButtonImg}
@@ -70,7 +70,7 @@ function Main(props) {
             />
           </button>
         </div>
-        <button type="button" onClick={props.onAddPlace} className="profile__add-button hover">
+        <button type="button" onClick={onAddPlace} className="profile__add-button hover">
           <picture>
             <source
               srcSet={addButtonS}
