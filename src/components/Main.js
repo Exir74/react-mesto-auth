@@ -7,6 +7,7 @@ import {api} from "../utils/api";
 import Card from "./Card";
 
 
+
 function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const [userName, setUserName] = React.useState('Жак-Ив Кусто')
   const [userDescription, setUserDescription] = React.useState('Иследователь')
@@ -16,26 +17,19 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
   React.useEffect(() => {
 
-      api.getUserInformation().then((res) => {
-        setUserName(res.name)
-        setUserDescription(res.about)
-        setUserAvatar(res.avatar)
+    api.getUserInformation().then((res) => {
+      setUserName(res.name)
+      setUserDescription(res.about)
+      setUserAvatar(res.avatar)
+    })
+      .catch((err) => {
+        console.log(err)
       })
-        .catch((err) => {
-          console.log(err)
-        })
-
   }, [])
+
   React.useEffect(() => {
-    api.getInitialCards().then(res => {
-      setCards(
-        res
-        // res.map(card => {
-        //   return (
-        //     card
-        //   )
-        // })
-      )
+    api.getInitialCards().then((res) => {
+      setCards(res)
     })
       .catch((err) => {
         console.log(err)
