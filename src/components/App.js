@@ -40,7 +40,7 @@ function App() {
 
   }
 
-  console.log(selectedCard)
+
   return (
     <div className="page">
       <Header/>
