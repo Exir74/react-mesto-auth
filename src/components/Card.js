@@ -7,7 +7,7 @@ function Card({card, onCardClick}) {
   }
 
   return (
-    <div key={card._id} className="cards__item card">
+    <div className="cards__item card">
       <button type="button" className="card__trash hover"></button>
       <button type="button" onClick={handleClick} className="card__button">
         <img className="card__image" src={card.link} alt={card.name}/>
