@@ -11,22 +11,9 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 
 function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
-  // const [userName, setUserName] = React.useState('Жак-Ив Кусто')
-  // const [userDescription, setUserDescription] = React.useState('Иследователь')
-  // const [userAvatar, setUserAvatar] = React.useState('Иследователь')
   const [cards, setCards] = React.useState([])
   const currentUser = React.useContext(CurrentUserContext)
-  // React.useEffect(() => {
-  //
-  //   api.getUserInformation().then((res) => {
-  //     setUserName(res.name)
-  //     setUserDescription(res.about)
-  //     setUserAvatar(res.avatar)
-  //   })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [])
+
 
   React.useEffect(() => {
     api.getInitialCards().then((res) => {
