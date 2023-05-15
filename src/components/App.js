@@ -7,6 +7,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import {api} from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
 
@@ -93,48 +94,50 @@ function App() {
         />
 
         <Footer/>
-        <PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}
-                       isOpen={isEditProfilePopupOpen}
-                       onClose={closeAllPopups}>
+        {/*<PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}*/}
+        {/*               isOpen={isEditProfilePopupOpen}*/}
+        {/*               onClose={closeAllPopups}>*/}
 
-          <input
-            className="popup__input popup__input_type_name"
-            name="popup-name"
-            id="name-input"
-            placeholder="Имя"
-            type="text"
-            defaultValue=""
-            required=""
-            minLength={2}
-            maxLength={40}
-          />
-          <div className="popup__error-wrapper">
-            <label
-              htmlFor="name-input"
-              className="popup__error-message"
-              id="name-input-error"
-            />
-          </div>
-          <input
-            className="popup__input popup__input_type_subtitle"
-            name="popup-subtitle"
-            id="subtitle-input"
-            placeholder="Вид деятельности"
-            type="text"
-            defaultValue=""
-            required=""
-            minLength={2}
-            maxLength={200}
-          />
-          <div className="popup__error-wrapper">
-            <label
-              htmlFor="subtitle-input"
-              className="popup__error-message"
-              id="subtitle-input-error"
-            />
-          </div>
-
-        </PopupWithForm>
+        {/*  <input*/}
+        {/*    className="popup__input popup__input_type_name"*/}
+        {/*    name="popup-name"*/}
+        {/*    id="name-input"*/}
+        {/*    placeholder="Имя"*/}
+        {/*    type="text"*/}
+        {/*    defaultValue=""*/}
+        {/*    required=""*/}
+        {/*    minLength={2}*/}
+        {/*    maxLength={40}*/}
+        {/*  />*/}
+        {/*  <div className="popup__error-wrapper">*/}
+        {/*    <label*/}
+        {/*      htmlFor="name-input"*/}
+        {/*      className="popup__error-message"*/}
+        {/*      id="name-input-error"*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*  <input*/}
+        {/*    className="popup__input popup__input_type_subtitle"*/}
+        {/*    name="popup-subtitle"*/}
+        {/*    id="subtitle-input"*/}
+        {/*    placeholder="Вид деятельности"*/}
+        {/*    type="text"*/}
+        {/*    defaultValue=""*/}
+        {/*    required=""*/}
+        {/*    minLength={2}*/}
+        {/*    maxLength={200}*/}
+        {/*  />*/}
+        {/*  <div className="popup__error-wrapper">*/}
+        {/*    <label*/}
+        {/*      htmlFor="subtitle-input"*/}
+        {/*      className="popup__error-message"*/}
+        {/*      id="subtitle-input-error"*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</PopupWithForm>*/}
+        {/*<EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />*/}
+        <EditProfilePopup isOpen={isAddPlacePopupOpen}
+                          onClose={closeAllPopups} />
         <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
                        isOpen={isAddPlacePopupOpen}
                        onClose={closeAllPopups}>
