@@ -1,23 +1,39 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
-function EditProfilePopup(isOpen, onClose){
-  const a = isOpen
-  const b = onClose
+function EditProfilePopup({isOpen, onClose}){
+  const [name, setName] = React.useState('')
+  const [description, setDescription] = React.useState('')
+  const currentUser = React.useContext(CurrentUserContext)
+
+  React.useEffect(() => {
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [currentUser]);
+
+  function handleName(e){
+      setName(e.target.value)
+  }
+
+  function handleDescription(e){
+    setDescription(e.target.value)
+  }
+
 return(
   <PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}
-                 isOpen={a}
-                 onClose={b}
-
+                 isOpen={isOpen}
+                 onClose={onClose}
   >
 
     <input
+      onChange={handleName}
       className="popup__input popup__input_type_name"
       name="popup-name"
       id="name-input"
       placeholder="Имя"
       type="text"
-      defaultValue=""
+      defaultValue={name}
       required=""
       minLength={2}
       maxLength={40}
@@ -30,12 +46,13 @@ return(
       />
     </div>
     <input
+      onChange={handleDescription}
       className="popup__input popup__input_type_subtitle"
       name="popup-subtitle"
       id="subtitle-input"
       placeholder="Вид деятельности"
       type="text"
-      defaultValue=""
+      defaultValue={description}
       required=""
       minLength={2}
       maxLength={200}

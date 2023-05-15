@@ -135,7 +135,7 @@ function App() {
         {/*    />*/}
         {/*  </div>*/}
         {/*</PopupWithForm>*/}
-        {/*<EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />*/}
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
         <EditProfilePopup isOpen={isAddPlacePopupOpen}
                           onClose={closeAllPopups} />
         <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
