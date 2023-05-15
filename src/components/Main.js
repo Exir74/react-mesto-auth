@@ -3,24 +3,14 @@ import editAvatarImg from "../image/editAvatar.png"
 import editButtonImg from "../image/Edit-Button.svg"
 import addButtonS from "../image/Add-Button-S.svg"
 import addButtonL from "../image/Add-Button-L.svg"
-import {api} from "../utils/api";
 import Card from "./Card";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 
 
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike}) {
-  const [cards, setCards] = React.useState([])
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards}) {
   const currentUser = React.useContext(CurrentUserContext)
-  React.useEffect(() => {
-    api.getInitialCards().then((res) => {
-      setCards(res)
-    })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
   return (
     <main className="main-content">
       <section className="profile">
