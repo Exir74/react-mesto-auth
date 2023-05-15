@@ -34,25 +34,16 @@ function App() {
     setSelectedCard(card)
   }
 
-  React.useEffect(() => {
-    api.getInitialCards().then((res) => {
-      setCards(res)
-    })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+
 
   function handleCardLike(card) {
-
-
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
     });
   }
+
   function handleCardDelete(card){
     api.deleteUserCard(card._id).then((newCards)=>{
       setCards((state) =>
@@ -62,8 +53,31 @@ function App() {
           }
         }))
     })
-
   }
+
+  function onUpdateUser({name, about}){
+    api.setUserInformation(name, about)
+      .then((user)=>{
+        setCurrentUser(user)
+        closeAllPopups()
+      })
+  }
+
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setIsEditProfilePopupOpen(false)
+    setSelectedCard({})
+  }
+
+  React.useEffect(() => {
+    api.getInitialCards().then((res) => {
+      setCards(res)
+    })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
 
   React.useEffect(() => {
     api.getUserInformation().then((res) => {
@@ -74,12 +88,7 @@ function App() {
       })
   }, [])
 
-  function closeAllPopups() {
-    setIsEditAvatarPopupOpen(false)
-    setIsAddPlacePopupOpen(false)
-    setIsEditProfilePopupOpen(false)
-    setSelectedCard({})
-  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -92,52 +101,8 @@ function App() {
               onCardDelete = {handleCardDelete}
               cards={cards}
         />
-
         <Footer/>
-        {/*<PopupWithForm title={"Редактировать профиль"} name={"profile-form"} buttonText={"Сохранить"}*/}
-        {/*               isOpen={isEditProfilePopupOpen}*/}
-        {/*               onClose={closeAllPopups}>*/}
-
-        {/*  <input*/}
-        {/*    className="popup__input popup__input_type_name"*/}
-        {/*    name="popup-name"*/}
-        {/*    id="name-input"*/}
-        {/*    placeholder="Имя"*/}
-        {/*    type="text"*/}
-        {/*    defaultValue=""*/}
-        {/*    required=""*/}
-        {/*    minLength={2}*/}
-        {/*    maxLength={40}*/}
-        {/*  />*/}
-        {/*  <div className="popup__error-wrapper">*/}
-        {/*    <label*/}
-        {/*      htmlFor="name-input"*/}
-        {/*      className="popup__error-message"*/}
-        {/*      id="name-input-error"*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*  <input*/}
-        {/*    className="popup__input popup__input_type_subtitle"*/}
-        {/*    name="popup-subtitle"*/}
-        {/*    id="subtitle-input"*/}
-        {/*    placeholder="Вид деятельности"*/}
-        {/*    type="text"*/}
-        {/*    defaultValue=""*/}
-        {/*    required=""*/}
-        {/*    minLength={2}*/}
-        {/*    maxLength={200}*/}
-        {/*  />*/}
-        {/*  <div className="popup__error-wrapper">*/}
-        {/*    <label*/}
-        {/*      htmlFor="subtitle-input"*/}
-        {/*      className="popup__error-message"*/}
-        {/*      id="subtitle-input-error"*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*</PopupWithForm>*/}
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
-        <EditProfilePopup isOpen={isAddPlacePopupOpen}
-                          onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}/>
         <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
                        isOpen={isAddPlacePopupOpen}
                        onClose={closeAllPopups}>
