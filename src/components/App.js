@@ -8,6 +8,7 @@ import ImagePopup from "./ImagePopup";
 import {api} from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
 
@@ -35,29 +36,37 @@ function App() {
   }
 
 
-
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+      });
   }
 
-  function handleCardDelete(card){
-    api.deleteUserCard(card._id).then((newCards)=>{
+  function handleCardDelete(card) {
+    api.deleteUserCard(card._id).then((newCards) => {
       setCards((state) =>
-        state.filter((item)=>{
-          if (item._id!=card._id){
+        state.filter((item) => {
+          if (item._id != card._id) {
             return item
           }
         }))
     })
   }
 
-  function onUpdateUser({name, about}){
+  function onUpdateUser({name, about}) {
     api.setUserInformation(name, about)
-      .then((user)=>{
+      .then((user) => {
+        setCurrentUser(user)
+        closeAllPopups()
+      })
+  }
+
+  function onUpdateAvatar({avatar}) {
+    api.setUserAvatar(avatar)
+      .then((user) => {
+        console.log(user)
         setCurrentUser(user)
         closeAllPopups()
       })
@@ -89,7 +98,6 @@ function App() {
   }, [])
 
 
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -97,8 +105,8 @@ function App() {
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
               onCardClick={handleCardClick}
-              onCardLike = {handleCardLike}
-              onCardDelete = {handleCardDelete}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
               cards={cards}
         />
         <Footer/>
@@ -141,26 +149,27 @@ function App() {
             />
           </div>
         </PopupWithForm>
-        <PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={"Сохранить"}
-                       isOpen={isEditAvatarPopupOpen}
-                       onClose={closeAllPopups}>
-          <input
-            className="popup__input popup__input_type_avatar-url"
-            placeholder="Ссылка на аватар"
-            name="popup-avatar-url"
-            id="avatar-url-input"
-            type="url"
-            defaultValue=""
-            required=""
-          />
-          <div className="popup__error-wrapper">
-            <label
-              htmlFor="avatar-url-input"
-              className="popup__error-message"
-              id="avatar-url-input-error"
-            />
-          </div>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}/>
+        {/*<PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={"Сохранить"}*/}
+        {/*               isOpen={isEditAvatarPopupOpen}*/}
+        {/*               onClose={closeAllPopups}>*/}
+        {/*  <input*/}
+        {/*    className="popup__input popup__input_type_avatar-url"*/}
+        {/*    placeholder="Ссылка на аватар"*/}
+        {/*    name="popup-avatar-url"*/}
+        {/*    id="avatar-url-input"*/}
+        {/*    type="url"*/}
+        {/*    defaultValue=""*/}
+        {/*    required=""*/}
+        {/*  />*/}
+        {/*  <div className="popup__error-wrapper">*/}
+        {/*    <label*/}
+        {/*      htmlFor="avatar-url-input"*/}
+        {/*      className="popup__error-message"*/}
+        {/*      id="avatar-url-input-error"*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</PopupWithForm>*/}
         <PopupWithForm title={"Вы уверены?"} name={"confirm-form"} buttonText={"Да"}>
         </PopupWithForm>
         <ImagePopup
