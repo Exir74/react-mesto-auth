@@ -106,6 +106,32 @@ class Api {
       })
   }
 
+  changeLikeCardStatus(cardId,isLiked) {
+    if (isLiked){
+      return fetch(this.baseUrl + '/cards/' + cardId + '/likes', {
+        method: 'PUT',
+        headers: {
+          authorization: this.headers.authorization,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          return this._getResponseData(res);
+        })
+    }else {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+        method: 'DELETE',
+        headers: {
+          authorization: this.headers.authorization,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          return this._getResponseData(res);
+        })
+    }
+  }
+
   setUserAvatar(link) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
