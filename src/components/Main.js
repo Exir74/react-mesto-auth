@@ -14,7 +14,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const [cards, setCards] = React.useState([])
   const currentUser = React.useContext(CurrentUserContext)
 
-
   React.useEffect(() => {
     api.getInitialCards().then((res) => {
       setCards(res)

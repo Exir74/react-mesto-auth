@@ -11,30 +11,27 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext";
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState({})
+  const [currentUser, setCurrentUser] = React.useState({})
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
   }
 
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
-
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
   }
-
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
   }
 
-  const [selectedCard, setSelectedCard] = React.useState({})
-
   function handleCardClick(card) {
     setSelectedCard(card)
   }
 
-  const [currentUser, setCurrentUser] = React.useState({})
   React.useEffect(() => {
     api.getUserInformation().then((res) => {
       setCurrentUser(res)
