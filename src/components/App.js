@@ -43,11 +43,25 @@ function App() {
   }, [])
 
   function handleCardLike(card) {
+
+
     const isLiked = card.likes.some(i => i._id === currentUser._id);
+
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
     });
+  }
+  function handleCardDelete(card){
+    api.deleteUserCard(card._id).then((newCards)=>{
+      setCards((state) =>
+        state.filter((item)=>{
+          if (item._id!=card._id){
+            return item
+          }
+        }))
+    })
+
   }
 
   React.useEffect(() => {
@@ -74,6 +88,7 @@ function App() {
               onEditAvatar={handleEditAvatarClick}
               onCardClick={handleCardClick}
               onCardLike = {handleCardLike}
+              onCardDelete = {handleCardDelete}
               cards={cards}
         />
 
