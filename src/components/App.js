@@ -20,16 +20,20 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({})
   const [cards, setCards] = React.useState([])
   const [saveText, setSaveText] = React.useState('Сохранить')
+  const [isRequestSent, setIsRequestSent] = React.useState(false)
+
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
+    setIsRequestSent(false)
     setIsAddPlacePopupOpen(true)
   }
 
   function handleEditAvatarClick() {
+    setIsRequestSent(false)
     setIsEditAvatarPopupOpen(true)
   }
 
@@ -63,6 +67,7 @@ function App() {
     api.addUserCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards])
+        setIsRequestSent(true)
         closeAllPopups()
       })
       .catch((err)=>{
@@ -91,6 +96,7 @@ function App() {
       .then((user) => {
         setCurrentUser(user)
         closeAllPopups()
+        setIsRequestSent(true)
       })
       .catch((err)=>{
         console.log(err)
@@ -134,9 +140,11 @@ function App() {
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
                           buttonText={saveText}/>
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}
+                       isRequestSent={isRequestSent}/>
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}
-                         buttonText={saveText}/>
+                         buttonText={saveText}
+                         isRequestSent={isRequestSent}/>
         <PopupWithForm title={"Вы уверены?"} name={"confirm-form"} buttonText={"Да"}>
         </PopupWithForm>
         <ImagePopup

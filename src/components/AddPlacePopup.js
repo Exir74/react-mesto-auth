@@ -1,10 +1,14 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({isOpen, onClose, onAddPlace}) {
+function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent}) {
   const [name, setName] = React.useState('')
   const [link, setLink] = React.useState('')
 
+  React.useEffect(() => {
+      setName('')
+      setLink('')
+  }, [isOpen, isRequestSent])
 
   function handleName(e) {
     setName(e.target.value)
@@ -18,6 +22,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
     e.preventDefault();
     onAddPlace({name, link})
   }
+
   return (
     <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
                    isOpen={isOpen}
@@ -29,7 +34,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
         name="popup-place-name"
         id="place-name-input"
         type="text"
-        defaultValue=""
+        value={name}
         onChange={handleName}
         required
         minLength={2}
@@ -48,9 +53,9 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
         name="popup-place-url"
         id="place-url-input"
         type="url"
-        defaultValue=""
+        value={link}
         onChange={handleLink}
-        required=""
+        required
       />
       <div className="popup__error-wrapper">
         <label
