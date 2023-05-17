@@ -19,6 +19,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({})
   const [currentUser, setCurrentUser] = React.useState({})
   const [cards, setCards] = React.useState([])
+  const [saveText, setSaveText] = React.useState('Сохранить')
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -64,20 +65,26 @@ function App() {
   }
 
   function onUpdateUser({name, about}) {
+    setSaveText('Сохранение...')
     api.setUserInformation(name, about)
       .then((user) => {
         setCurrentUser(user)
         closeAllPopups()
       })
+      .finally(()=>{
+        setSaveText('Сохранить')
+      })
   }
 
   function onUpdateAvatar({avatar}) {
+    setSaveText('Сохранение...')
     api.setUserAvatar(avatar)
       .then((user) => {
         console.log(user)
         setCurrentUser(user)
         closeAllPopups()
       })
+      .finally(()=>setSaveText('Сохранить'))
   }
 
   function closeAllPopups() {
@@ -114,47 +121,9 @@ function App() {
               cards={cards}
         />
         <Footer/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}/>
-        {/*<PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}*/}
-        {/*               isOpen={isAddPlacePopupOpen}*/}
-        {/*               onClose={closeAllPopups}>*/}
-        {/*  <input*/}
-        {/*    className="popup__input popup__input_type_place-name"*/}
-        {/*    placeholder="Название"*/}
-        {/*    name="popup-place-name"*/}
-        {/*    id="place-name-input"*/}
-        {/*    type="text"*/}
-        {/*    defaultValue=""*/}
-        {/*    required=""*/}
-        {/*    minLength={2}*/}
-        {/*    maxLength={30}*/}
-        {/*  />*/}
-        {/*  <div className="popup__error-wrapper">*/}
-        {/*    <label*/}
-        {/*      htmlFor="place-name-input"*/}
-        {/*      className="popup__error-message"*/}
-        {/*      id="place-name-input-error"*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*  <input*/}
-        {/*    className="popup__input popup__input_type_place-url"*/}
-        {/*    placeholder="Ссылка на картинку"*/}
-        {/*    name="popup-place-url"*/}
-        {/*    id="place-url-input"*/}
-        {/*    type="url"*/}
-        {/*    defaultValue=""*/}
-        {/*    required=""*/}
-        {/*  />*/}
-        {/*  <div className="popup__error-wrapper">*/}
-        {/*    <label*/}
-        {/*      htmlFor="place-url-input"*/}
-        {/*      className="popup__error-message"*/}
-        {/*      id="place-url-input-error"*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*</PopupWithForm>*/}
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser} buttonText={saveText}/>
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}/>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar} buttonText={saveText}/>
         <PopupWithForm title={"Вы уверены?"} name={"confirm-form"} buttonText={"Да"}>
         </PopupWithForm>
         <ImagePopup
