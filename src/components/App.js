@@ -80,7 +80,6 @@ function App() {
     setSaveText('Сохранение...')
     api.setUserAvatar(avatar)
       .then((user) => {
-        console.log(user)
         setCurrentUser(user)
         closeAllPopups()
       })
