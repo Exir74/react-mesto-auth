@@ -17,7 +17,6 @@ function PopupWithForm({name, isOpen, onClose, title, buttonText, children, onSu
           method="get"
           name={name}
           className="popup__form"
-          noValidate=""
         >
           <h3 className="popup__title">{title}</h3>
           {children}

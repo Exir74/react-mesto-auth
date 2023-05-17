@@ -43,7 +43,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, buttonText}) {
         placeholder="Имя"
         type="text"
         defaultValue={name}
-        required=""
+        required
         minLength={2}
         maxLength={40}
       />

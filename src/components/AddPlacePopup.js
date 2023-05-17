@@ -31,7 +31,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
         type="text"
         defaultValue=""
         onChange={handleName}
-        required=""
+        required
         minLength={2}
         maxLength={30}
       />
