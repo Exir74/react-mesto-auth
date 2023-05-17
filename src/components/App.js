@@ -9,6 +9,7 @@ import {api} from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
 
@@ -35,7 +36,6 @@ function App() {
     setSelectedCard(card)
   }
 
-
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
@@ -53,6 +53,14 @@ function App() {
           }
         }))
     })
+  }
+
+  function handleAddPlaceSubmit({name,link}){
+    api.addUserCard(name,link)
+      .then((newCard)=>{
+        setCards([newCard, ...cards])
+        closeAllPopups()
+      })
   }
 
   function onUpdateUser({name, about}) {
@@ -86,9 +94,6 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
-  }, [])
-
-  React.useEffect(() => {
     api.getUserInformation().then((res) => {
       setCurrentUser(res)
     })
@@ -96,7 +101,6 @@ function App() {
         console.log(err)
       })
   }, [])
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -111,65 +115,46 @@ function App() {
         />
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}/>
-        <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
-                       isOpen={isAddPlacePopupOpen}
-                       onClose={closeAllPopups}>
-          <input
-            className="popup__input popup__input_type_place-name"
-            placeholder="Название"
-            name="popup-place-name"
-            id="place-name-input"
-            type="text"
-            defaultValue=""
-            required=""
-            minLength={2}
-            maxLength={30}
-          />
-          <div className="popup__error-wrapper">
-            <label
-              htmlFor="place-name-input"
-              className="popup__error-message"
-              id="place-name-input-error"
-            />
-          </div>
-          <input
-            className="popup__input popup__input_type_place-url"
-            placeholder="Ссылка на картинку"
-            name="popup-place-url"
-            id="place-url-input"
-            type="url"
-            defaultValue=""
-            required=""
-          />
-          <div className="popup__error-wrapper">
-            <label
-              htmlFor="place-url-input"
-              className="popup__error-message"
-              id="place-url-input-error"
-            />
-          </div>
-        </PopupWithForm>
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}/>
-        {/*<PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={"Сохранить"}*/}
-        {/*               isOpen={isEditAvatarPopupOpen}*/}
+        {/*<PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}*/}
+        {/*               isOpen={isAddPlacePopupOpen}*/}
         {/*               onClose={closeAllPopups}>*/}
         {/*  <input*/}
-        {/*    className="popup__input popup__input_type_avatar-url"*/}
-        {/*    placeholder="Ссылка на аватар"*/}
-        {/*    name="popup-avatar-url"*/}
-        {/*    id="avatar-url-input"*/}
+        {/*    className="popup__input popup__input_type_place-name"*/}
+        {/*    placeholder="Название"*/}
+        {/*    name="popup-place-name"*/}
+        {/*    id="place-name-input"*/}
+        {/*    type="text"*/}
+        {/*    defaultValue=""*/}
+        {/*    required=""*/}
+        {/*    minLength={2}*/}
+        {/*    maxLength={30}*/}
+        {/*  />*/}
+        {/*  <div className="popup__error-wrapper">*/}
+        {/*    <label*/}
+        {/*      htmlFor="place-name-input"*/}
+        {/*      className="popup__error-message"*/}
+        {/*      id="place-name-input-error"*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*  <input*/}
+        {/*    className="popup__input popup__input_type_place-url"*/}
+        {/*    placeholder="Ссылка на картинку"*/}
+        {/*    name="popup-place-url"*/}
+        {/*    id="place-url-input"*/}
         {/*    type="url"*/}
         {/*    defaultValue=""*/}
         {/*    required=""*/}
         {/*  />*/}
         {/*  <div className="popup__error-wrapper">*/}
         {/*    <label*/}
-        {/*      htmlFor="avatar-url-input"*/}
+        {/*      htmlFor="place-url-input"*/}
         {/*      className="popup__error-message"*/}
-        {/*      id="avatar-url-input-error"*/}
+        {/*      id="place-url-input-error"*/}
         {/*    />*/}
         {/*  </div>*/}
         {/*</PopupWithForm>*/}
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}/>
         <PopupWithForm title={"Вы уверены?"} name={"confirm-form"} buttonText={"Да"}>
         </PopupWithForm>
         <ImagePopup
