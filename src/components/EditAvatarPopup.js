@@ -25,7 +25,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, buttonText}) {
         id="avatar-url-input"
         type="url"
         defaultValue=""
-        required=""
+        required
       />
       <div className="popup__error-wrapper">
         <label

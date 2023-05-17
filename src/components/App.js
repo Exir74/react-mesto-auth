@@ -1,5 +1,4 @@
 import React from "react";
-import '../index.css';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -42,25 +41,32 @@ function App() {
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   function handleCardDelete(card) {
-    api.deleteUserCard(card._id).then((newCards) => {
-      setCards((state) =>
-        state.filter((item) => {
-          if (item._id != card._id) {
-            return item
-          }
-        }))
-    })
+    api.deleteUserCard(card._id)
+      .then((newCards) => {
+        setCards((state) =>
+          state.filter(item => item._id !== card._id)
+        )
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  function handleAddPlaceSubmit({name,link}){
-    api.addUserCard(name,link)
-      .then((newCard)=>{
+  function handleAddPlaceSubmit({name, link}) {
+    api.addUserCard(name, link)
+      .then((newCard) => {
         setCards([newCard, ...cards])
         closeAllPopups()
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 
@@ -71,7 +77,10 @@ function App() {
         setCurrentUser(user)
         closeAllPopups()
       })
-      .finally(()=>{
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
         setSaveText('Сохранить')
       })
   }
@@ -83,7 +92,10 @@ function App() {
         setCurrentUser(user)
         closeAllPopups()
       })
-      .finally(()=>setSaveText('Сохранить'))
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => setSaveText('Сохранить'))
   }
 
   function closeAllPopups() {
@@ -120,9 +132,11 @@ function App() {
               cards={cards}
         />
         <Footer/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser} buttonText={saveText}/>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
+                          buttonText={saveText}/>
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar} buttonText={saveText}/>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}
+                         buttonText={saveText}/>
         <PopupWithForm title={"Вы уверены?"} name={"confirm-form"} buttonText={"Да"}>
         </PopupWithForm>
         <ImagePopup
