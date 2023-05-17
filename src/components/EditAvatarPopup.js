@@ -1,8 +1,9 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, buttonText,isRequestSent}) {
+function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, buttonText, isRequestSent}) {
   const urlAvatarRef = React.useRef()
+
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateAvatar({
@@ -10,9 +11,10 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, buttonText,isRequestS
     });
 
   }
-  React.useEffect(()=>{
-      urlAvatarRef.current.value = ''
-  }, [isOpen , isRequestSent])
+
+  React.useEffect(() => {
+    urlAvatarRef.current.value = ''
+  }, [isOpen, isRequestSent])
   return (
     <PopupWithForm title={"Обновить аватар"} name={"avatar-form"} buttonText={buttonText}
                    isOpen={isOpen}

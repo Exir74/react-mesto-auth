@@ -70,7 +70,7 @@ function App() {
         setIsRequestSent(true)
         closeAllPopups()
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       })
   }
@@ -82,7 +82,7 @@ function App() {
         setCurrentUser(user)
         closeAllPopups()
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       })
       .finally(() => {
@@ -98,7 +98,7 @@ function App() {
         closeAllPopups()
         setIsRequestSent(true)
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       })
       .finally(() => setSaveText('Сохранить'))
