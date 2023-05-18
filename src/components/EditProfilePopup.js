@@ -3,29 +3,25 @@ import PopupWithForm from "./PopupWithForm";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function EditProfilePopup({isOpen, onClose, onUpdateUser, buttonText}) {
-  const [name, setName] = React.useState('')
-  const [description, setDescription] = React.useState('')
   const currentUser = React.useContext(CurrentUserContext)
+  const [values, setValues] = React.useState({})
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
+    setValues({name: currentUser.name, description: currentUser.about})
   }, [isOpen, currentUser]);
 
-
-  function handleName(e) {
-    setName(e.target.value)
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setValues((prev) => ({
+      ...prev,
+      [name]: value
+    }))
   }
-
-  function handleDescription(e) {
-    setDescription(e.target.value)
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name,
-      about: description,
+      name: values.name,
+      about: values.description,
     })
   }
 
@@ -37,13 +33,13 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, buttonText}) {
     >
 
       <input
-        onChange={handleName}
+        onChange={handleChange}
         className="popup__input popup__input_type_name"
-        name="popup-name"
+        name="name"
         id="name-input"
         placeholder="Имя"
         type="text"
-        value={name ?? ''}
+        value={values.name ?? ''}
         required
         minLength={2}
         maxLength={40}
@@ -56,13 +52,13 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, buttonText}) {
         />
       </div>
       <input
-        onChange={handleDescription}
+        onChange={handleChange}
         className="popup__input popup__input_type_subtitle"
-        name="popup-subtitle"
+        name="description"
         id="subtitle-input"
         placeholder="Вид деятельности"
         type="text"
-        value={description ?? ''}
+        value={values.description ?? ''}
         required
         minLength={2}
         maxLength={200}
