@@ -2,25 +2,26 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent}) {
-  const [name, setName] = React.useState('')
-  const [link, setLink] = React.useState('')
+  const [values, setValues] = React.useState({})
 
   React.useEffect(() => {
-      setName('')
-      setLink('')
+    setValues({name: '', link: ''})
   }, [isOpen, isRequestSent])
 
-  function handleName(e) {
-    setName(e.target.value)
-  }
-
-  function handleLink(e) {
-    setLink(e.target.value)
+  const handleChange = (event) => {
+    const {name, value} = event.target
+    setValues((prev) => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({name, link})
+    onAddPlace({
+      name: values.name,
+      link: values.link
+    })
   }
 
   return (
@@ -31,11 +32,11 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent}) {
       <input
         className="popup__input popup__input_type_place-name"
         placeholder="Название"
-        name="popup-place-name"
+        name="name"
         id="place-name-input"
         type="text"
-        value={name}
-        onChange={handleName}
+        value={values.name ?? ''}
+        onChange={handleChange}
         required
         minLength={2}
         maxLength={30}
@@ -50,11 +51,11 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent}) {
       <input
         className="popup__input popup__input_type_place-url"
         placeholder="Ссылка на картинку"
-        name="popup-place-url"
+        name="link"
         id="place-url-input"
         type="url"
-        value={link}
-        onChange={handleLink}
+        value={values.link ?? ''}
+        onChange={handleChange}
         required
       />
       <div className="popup__error-wrapper">
