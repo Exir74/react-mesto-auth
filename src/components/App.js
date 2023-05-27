@@ -10,6 +10,8 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import Register from "./Register";
+import Login from "./Login";
 
 function App() {
 
@@ -150,6 +152,8 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}/>
+        <Login></Login>
+        <Register></Register>
       </div>
     </CurrentUserContext.Provider>
   );

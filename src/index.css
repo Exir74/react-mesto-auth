@@ -50,3 +50,8 @@
 @import url(./blocks/profile/__edit/pofile__edit.css);
 @import url(./blocks/profile/__edit-avatar/profile__edit-avatar.css);
 @import url(./blocks/profile/__avatar-wrapper/profile__avatar-wrapper.css);
+@import url(./blocks/header/__user-email/header__user-email.css);
+@import url(./blocks/header/__user-wrapper/header__user-wrapper.css);
+@import url(./blocks/header/__user-action/header__user-action.css);
+@import url(blocks/header/__user-action/_blur/header__user-action_blur.css);
+@import url(blocks/header/__user-email/_disabled/header__user-email_disabled.css);
