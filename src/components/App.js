@@ -24,7 +24,6 @@ function App() {
   const [saveText, setSaveText] = React.useState('Сохранить')
   const [isRequestSent, setIsRequestSent] = React.useState(false)
 
-
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
   }
@@ -133,14 +132,14 @@ function App() {
       <div className="page">
         <Header/>
         {/*<Login></Login>*/}
-        {/*<Register></Register>*/}
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              cards={cards}
-        />
+        <Register></Register>
+        {/*<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
+        {/*      onEditAvatar={handleEditAvatarClick}*/}
+        {/*      onCardClick={handleCardClick}*/}
+        {/*      onCardLike={handleCardLike}*/}
+        {/*      onCardDelete={handleCardDelete}*/}
+        {/*      cards={cards}*/}
+        {/*/>*/}
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
                           buttonText={saveText}/>

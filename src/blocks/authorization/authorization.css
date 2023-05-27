@@ -3,6 +3,5 @@
     max-width: 358px;
     margin:0 auto 0 auto;
     box-sizing: border-box;
-    /*min-height: 100vh;*/
-    flex: 1 1 auto;
+    max-height: 100vh;
 }
