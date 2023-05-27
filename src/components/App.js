@@ -132,13 +132,15 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header/>
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              cards={cards}
-        />
+        <Login></Login>
+        <Register></Register>
+        {/*<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
+        {/*      onEditAvatar={handleEditAvatarClick}*/}
+        {/*      onCardClick={handleCardClick}*/}
+        {/*      onCardLike={handleCardLike}*/}
+        {/*      onCardDelete={handleCardDelete}*/}
+        {/*      cards={cards}*/}
+        {/*/>*/}
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
                           buttonText={saveText}/>
@@ -152,8 +154,6 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}/>
-        <Login></Login>
-        <Register></Register>
       </div>
     </CurrentUserContext.Provider>
   );
