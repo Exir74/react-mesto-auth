@@ -132,15 +132,15 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header/>
-        <Login></Login>
-        <Register></Register>
-        {/*<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
-        {/*      onEditAvatar={handleEditAvatarClick}*/}
-        {/*      onCardClick={handleCardClick}*/}
-        {/*      onCardLike={handleCardLike}*/}
-        {/*      onCardDelete={handleCardDelete}*/}
-        {/*      cards={cards}*/}
-        {/*/>*/}
+        {/*<Login></Login>*/}
+        {/*<Register></Register>*/}
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+        />
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
                           buttonText={saveText}/>
