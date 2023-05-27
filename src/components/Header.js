@@ -1,7 +1,7 @@
 import logo from "../image/logo.svg";
 import React from "react";
 
-function Header() {
+function Header({isLoginPage}) {
   return (
     <header className="header">
       <a href="src/components/App#">
@@ -9,7 +9,7 @@ function Header() {
       </a>
       <div className='header__user-wrapper'>
         <span className='header__user-email '>email@mail.com</span>
-        <a href='#' className='header__user-action hover'>Выйти</a>
+        <a href='#' className='header__user-action hover'>{isLoginPage ? 'Регистрация' : 'Войти' }</a>
       </div>
     </header>)
 }

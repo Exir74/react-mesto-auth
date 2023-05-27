@@ -23,6 +23,8 @@ function App() {
   const [cards, setCards] = React.useState([])
   const [saveText, setSaveText] = React.useState('Сохранить')
   const [isRequestSent, setIsRequestSent] = React.useState(false)
+  const [isLoginPage, setIsLoginPage] = React.useState(true)
+
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -130,9 +132,9 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header/>
-        {/*<Login></Login>*/}
-        <Register></Register>
+        <Header isLoginPage={isLoginPage}/>
+        {/*<Login onOpenLogin={setIsLoginPage} isLoginPage={isLoginPage}></Login>*/}
+        <Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage}></Register>
         {/*<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
         {/*      onEditAvatar={handleEditAvatarClick}*/}
         {/*      onCardClick={handleCardClick}*/}

@@ -1,9 +1,12 @@
 import React from "react";
 import PageWithAuthorization from "./PageWithAuthorization";
 
-function Login() {
+function Login({onOpenLogin, isLoginPage}) {
+  React.useEffect(()=>{
+    onOpenLogin(true)
+  },[])
   return (
-    <PageWithAuthorization formName='Вход' buttonText='Войти' isLoginPage={true}/>
+    <PageWithAuthorization formName='Вход' isLoginPage={isLoginPage}/>
   )
 }
 

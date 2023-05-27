@@ -49,7 +49,7 @@ function PageWithAuthorization({formName, buttonText, isLoginPage}) {
           />
         </div>
         <button type="submit" className="authorization__button">
-          {buttonText}
+          {`${isLoginPage ? 'Войти' : 'Зарегистрироваться'}`}
         </button>
       </form>
       <a className={`authorization__sign-in ${isLoginPage ? 'authorization__sign-in_disabled' : ''}`} href='#'>Уже

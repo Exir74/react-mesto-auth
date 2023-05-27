@@ -1,8 +1,11 @@
 import React from "react";
 import PageWithAuthorization from "./PageWithAuthorization";
-function Register() {
+function Register({onOpenRegister, isLoginPage}) {
+  React.useEffect(()=>{
+    onOpenRegister(false)
+  },[])
   return (
-    <PageWithAuthorization formName='Регистрация' buttonText='Зарегистрироваться' isLoginPage={false}/>
+    <PageWithAuthorization formName='Регистрация'  isLoginPage={isLoginPage}/>
   )
 }
 
