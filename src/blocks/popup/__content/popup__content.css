@@ -5,6 +5,6 @@
   display: grid;
   align-content: center;
   justify-content: center;
-  grid-template-rows: 40px auto 40px;
+  grid-template-rows: 60px auto 60px;
   grid-template-columns: 40px auto 40px;
 }

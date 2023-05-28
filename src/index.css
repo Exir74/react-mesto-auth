@@ -62,3 +62,7 @@
 @import url(blocks/authorization/__button/authorization__button.css);
 @import url(blocks/authorization/__sign-in/authorization__sign-in.css);
 @import url(blocks/authorization/__sign-in/_disabled/authorization__sign-in_disabled.css);
+@import url(blocks/popup/__success/popup__success.css);
+@import url(blocks/popup/__body/popup__body.css);
+@import url(blocks/popup/__registration-img/popup__registration-img.css);
+@import url(blocks/popup/__registration-text/popup__registration-text.css);

@@ -12,6 +12,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Register from "./Register";
 import Login from "./Login";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
   const [saveText, setSaveText] = React.useState('Сохранить')
   const [isRequestSent, setIsRequestSent] = React.useState(false)
   const [isLoginPage, setIsLoginPage] = React.useState(true)
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false)
 
 
   function handleEditProfileClick() {
@@ -134,7 +136,7 @@ function App() {
       <div className="page">
         <Header isLoginPage={isLoginPage}/>
         {/*<Login onOpenLogin={setIsLoginPage} isLoginPage={isLoginPage}></Login>*/}
-        <Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage}></Register>
+        <Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage} ></Register>
         {/*<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
         {/*      onEditAvatar={handleEditAvatarClick}*/}
         {/*      onCardClick={handleCardClick}*/}
@@ -155,6 +157,9 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}/>
+        <InfoTooltip isRegistrationSuccess={isRegistrationSuccess}>
+
+        </InfoTooltip>
       </div>
     </CurrentUserContext.Provider>
   );
