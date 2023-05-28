@@ -1,5 +1,6 @@
 .authorization{
     display: grid;
+    grid-template-rows: auto 17px;
     max-width: 358px;
     margin:0 auto 0 auto;
     box-sizing: border-box;

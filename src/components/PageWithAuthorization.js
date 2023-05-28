@@ -1,6 +1,7 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
-function PageWithAuthorization({formName, buttonText, isLoginPage}) {
+function PageWithAuthorization({formName, isLoginPage}) {
   return (
     <div className='authorization'>
       <form
@@ -52,8 +53,9 @@ function PageWithAuthorization({formName, buttonText, isLoginPage}) {
           {`${isLoginPage ? 'Войти' : 'Зарегистрироваться'}`}
         </button>
       </form>
-      <a className={`authorization__sign-in ${isLoginPage ? 'authorization__sign-in_disabled' : ''}`} href='#'>Уже
-        зарегистрированы? Войти</a>
+      <Link to='/sign-in' className={`authorization__sign-in ${isLoginPage ? 'authorization__sign-in_disabled' : ''}`}
+            href='#'>Уже
+        зарегистрированы? Войти</Link>
     </div>
   )
 }

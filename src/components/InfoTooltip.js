@@ -5,7 +5,8 @@ import failedRegistration from "../image/failedRegistration.png"
 
 function InfoTooltip({isRegistrationSuccess}) {
   return (
-    <div className={`popup image-popup popup_open`}>
+    <div className={`popup image-popup `}>
+      {/*Надо сделать показ попапа при успшной и не успешной регистрации*/}
       <div className="popup__content">
         <button type="button" onClick={'onClose'} className="popup__close hover">
           <img
@@ -20,14 +21,15 @@ function InfoTooltip({isRegistrationSuccess}) {
                  src={isRegistrationSuccess ? successRegistration : failedRegistration}/>
             <p className='popup__registration-text'>{isRegistrationSuccess ? 'Вы успешно зарегистрировались!' : `Что-то пошло не так!
               Попробуйте ещё раз.`}</p>
-              </div>
-            {/*<img className="popup__full-image" src={'card.link'} alt={'card.name'}/>*/}
-              </div>
-            {/*<div className="popup__image-name">*/}
-            {/*  <p className="popup__image-text">{'card.name'}</p>*/}
-            {/*</div>*/}
-              </div>
-              </div>
-              )
-            }
-              export default InfoTooltip
+          </div>
+          {/*<img className="popup__full-image" src={'card.link'} alt={'card.name'}/>*/}
+        </div>
+        {/*<div className="popup__image-name">*/}
+        {/*  <p className="popup__image-text">{'card.name'}</p>*/}
+        {/*</div>*/}
+      </div>
+    </div>
+  )
+}
+
+export default InfoTooltip

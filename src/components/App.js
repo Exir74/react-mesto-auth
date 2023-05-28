@@ -13,6 +13,8 @@ import AddPlacePopup from "./AddPlacePopup";
 import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
+import {Link, Navigate, Route, Routes} from "react-router-dom";
+import ProtectedRouteElement from "./ProtectedRoute";
 
 function App() {
 
@@ -26,6 +28,7 @@ function App() {
   const [isRequestSent, setIsRequestSent] = React.useState(false)
   const [isLoginPage, setIsLoginPage] = React.useState(true)
   const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false)
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true)
 
 
   function handleEditProfileClick() {
@@ -135,15 +138,38 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header isLoginPage={isLoginPage}/>
-        {/*<Login onOpenLogin={setIsLoginPage} isLoginPage={isLoginPage}></Login>*/}
-        <Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage} ></Register>
-        {/*<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
-        {/*      onEditAvatar={handleEditAvatarClick}*/}
-        {/*      onCardClick={handleCardClick}*/}
-        {/*      onCardLike={handleCardLike}*/}
-        {/*      onCardDelete={handleCardDelete}*/}
-        {/*      cards={cards}*/}
-        {/*/>*/}
+        <Routes>
+          <Route path='/sign-in'
+                 element={<Login onOpenLogin={setIsLoginPage} isLoginPage={isLoginPage}></Login>}></Route>
+          <Route path='/sign-up' element={<Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage}/>}/>
+
+          {/*<Route path='/' element={*/}
+          {/*  <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
+          {/*        onEditAvatar={handleEditAvatarClick}*/}
+          {/*        onCardClick={handleCardClick}*/}
+          {/*        onCardLike={handleCardLike}*/}
+          {/*        onCardDelete={handleCardDelete}*/}
+          {/*        cards={cards}/>*/}
+          {/*}/>*/}
+
+          <Route path='/'
+                 element={
+                   <ProtectedRouteElement
+                     element={<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
+                                    onEditAvatar={handleEditAvatarClick}
+                                    onCardClick={handleCardClick}
+                                    onCardLike={handleCardLike}
+                                    onCardDelete={handleCardDelete}
+                                    cards={cards}/>}
+                     isLoggedIn={isLoggedIn}
+                   />
+                 }
+          />
+
+          {/*<Route path='*' element={<ProtectedRouteElement*/}
+          {/*  element={<Link to='/'/>}*/}
+          {/*  isLoggedIn={isLoggedIn}/>}/>*/}
+        </Routes>
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
                           buttonText={saveText}/>
@@ -158,7 +184,6 @@ function App() {
           card={selectedCard}
           onClose={closeAllPopups}/>
         <InfoTooltip isRegistrationSuccess={isRegistrationSuccess}>
-
         </InfoTooltip>
       </div>
     </CurrentUserContext.Provider>
