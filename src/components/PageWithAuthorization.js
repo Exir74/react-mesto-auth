@@ -1,27 +1,60 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import * as auth from '../utils/auth'
 
-function PageWithAuthorization({formName, isLoginPage}) {
+function PageWithAuthorization({
+                                 formName,
+                                 isLoginPage,
+                                 handleChange,
+                                 handleSubmit,
+                                 email,
+                                 password
+                               }) {
+  // const navigate = useNavigate();
+  // const [values, setValues] = React.useState({})
+  //
+  // const handleChange = (event) => {
+  //   const {name, value} = event.target
+  //   setValues((prev) => ({
+  //     ...prev,
+  //     [name]: value
+  //   }))
+  // }
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   auth.register(values.password, values.email)
+  //     .then((res) => {
+  //       if (res.status === 201) {
+  //         onOpenInfoTooltip(true)
+  //         setIsRegistrationSuccess(true)
+  //         setTimeout(()=>onOpenInfoTooltip(false), 2000)
+  //         navigate('/sign-in', {replace: true})
+  //       } else {
+  //         setIsRegistrationSuccess(false)
+  //         onOpenInfoTooltip(true)
+  //         setTimeout(()=>onOpenInfoTooltip(false), 2000)
+  //       }
+  //     })
+  // }
   return (
     <div className='authorization'>
       <form
-        // onSubmit={'onSubmit'}
+        onSubmit={handleSubmit}
         method="get"
         name={'name'}
         className="authorization__form"
       >
         <h3 className="authorization__title">{formName}</h3>
         <input
-          // onChange={'handleChange'}
+          onChange={handleChange}
           className="authorization__input popup__input_type_email"
           name="email"
-          id="name-input"
+          id="email-input"
           placeholder="Email"
-          type="text"
-          // value={values.name ?? ''}
+          autoComplete='email'
+          type="email"
+          value={email ?? ''}
           required
-          minLength={2}
-          maxLength={40}
         />
         <div className="popup__error-wrapper">
           <label
@@ -31,16 +64,17 @@ function PageWithAuthorization({formName, isLoginPage}) {
           />
         </div>
         <input
-          // onChange={'handleChange'}
+          onChange={handleChange}
           className="authorization__input popup__input_type_password"
           name="password"
-          id="subtitle-input"
+          id="password-input"
           placeholder="Пароль"
-          type="text"
-          // value={values.description ?? ''}
+          autoComplete='current-password'
+          type="password"
+          value={password ?? ''}
           required
-          minLength={2}
-          maxLength={200}
+          minLength={6}
+          maxLength={10}
         />
         <div className="popup__error-wrapper">
           <label

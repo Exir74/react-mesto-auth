@@ -3,12 +3,12 @@ import closeIcon from "../image/Close-Icon.svg";
 import successRegistration from "../image/successRegistration.png"
 import failedRegistration from "../image/failedRegistration.png"
 
-function InfoTooltip({isRegistrationSuccess}) {
+function InfoTooltip({isRegistrationSuccess, onClose, isOpen}) {
   return (
-    <div className={`popup image-popup `}>
+    <div className={`popup image-popup ${isOpen ? 'popup_open' : ''}`}>
       {/*Надо сделать показ попапа при успшной и не успешной регистрации*/}
       <div className="popup__content">
-        <button type="button" onClick={'onClose'} className="popup__close hover">
+        <button type="button" onClick={onClose} className="popup__close hover">
           <img
             className="popup__close-icon"
             src={closeIcon}
