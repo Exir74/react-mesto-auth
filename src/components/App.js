@@ -161,7 +161,7 @@ function App() {
                  element={
                    <ProtectedRouteElement
                      isLoggedIn={isLoggedIn}
-                     element={0}
+                     element={''}
                    />
                  }
           />
