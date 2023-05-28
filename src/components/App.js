@@ -15,6 +15,7 @@ import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
 import {Link, Navigate, Route, Routes} from "react-router-dom";
 import ProtectedRouteElement from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 
@@ -142,33 +143,28 @@ function App() {
           <Route path='/sign-in'
                  element={<Login onOpenLogin={setIsLoginPage} isLoginPage={isLoginPage}></Login>}></Route>
           <Route path='/sign-up' element={<Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage}/>}/>
-
-          {/*<Route path='/' element={*/}
-          {/*  <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}*/}
-          {/*        onEditAvatar={handleEditAvatarClick}*/}
-          {/*        onCardClick={handleCardClick}*/}
-          {/*        onCardLike={handleCardLike}*/}
-          {/*        onCardDelete={handleCardDelete}*/}
-          {/*        cards={cards}/>*/}
-          {/*}/>*/}
-
           <Route path='/'
                  element={
                    <ProtectedRouteElement
-                     element={<Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
-                                    onEditAvatar={handleEditAvatarClick}
-                                    onCardClick={handleCardClick}
-                                    onCardLike={handleCardLike}
-                                    onCardDelete={handleCardDelete}
-                                    cards={cards}/>}
                      isLoggedIn={isLoggedIn}
+                     element={Main}
+                     onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
+                     onEditAvatar={handleEditAvatarClick}
+                     onCardClick={handleCardClick}
+                     onCardLike={handleCardLike}
+                     onCardDelete={handleCardDelete}
+                     cards={cards}
                    />
                  }
           />
-
-          {/*<Route path='*' element={<ProtectedRouteElement*/}
-          {/*  element={<Link to='/'/>}*/}
-          {/*  isLoggedIn={isLoggedIn}/>}/>*/}
+          <Route path='*'
+                 element={
+                   <ProtectedRouteElement
+                     isLoggedIn={isLoggedIn}
+                     element={0}
+                   />
+                 }
+          />
         </Routes>
         <Footer/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
