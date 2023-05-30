@@ -27,12 +27,25 @@ export const authorize = (password, email) => {
       email: email
     })
   })
-    .then((response => response.json()))
+    .then((res => res.json()))
     .then((data) => {
-      if (data.user){
-        localStorage.setItem('jwt', data.jwt);
+      if (data.token){
+        localStorage.setItem('token', data.token);
         return data;
       }
     })
     .catch(err => console.log(err))
+    // .then((res)=>{
+    //   return res
+    // })
+    // .then(res=>{
+    //   try {
+    //     if (res.status === 200) {
+    //       return res.json()
+    //     }
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // })
+
 }

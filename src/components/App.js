@@ -29,11 +29,10 @@ function App() {
   const [isRequestSent, setIsRequestSent] = React.useState(false)
   const [isLoginPage, setIsLoginPage] = React.useState(true)
   const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false)
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true)
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
-
-  function handleInfoTooltipShow() {
-    setIsInfoTooltipOpen(true)
+  function handleLogin(){
+    setIsLoggedIn(true)
   }
 
   function handleEditProfileClick() {
@@ -143,20 +142,24 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header isLoginPage={isLoginPage}/>
+        <Header isLoginPage={isLoginPage} isLoggedIn={isLoggedIn}/>
         <Routes>
           <Route path='/sign-in'
-                 element={<Login onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage}
-                                 setIsRegistrationSuccess={setIsRegistrationSuccess}
-                                 onOpenInfoTooltip={setIsInfoTooltipOpen}/>}/>
-          <Route path='/sign-up' element={<Register onOpenRegister={setIsLoginPage} isLoginPage={isLoginPage}
+                 element={<Login onOpenRegister={setIsLoginPage}
+                                 isLoginPage={isLoginPage}
+                                 handleLogin={handleLogin}
+                                 onOpenInfoTooltip={setIsInfoTooltipOpen}
+                 />}/>
+          <Route path='/sign-up' element={<Register onOpenRegister={setIsLoginPage}
+                                                    isLoginPage={isLoginPage}
                                                     setIsRegistrationSuccess={setIsRegistrationSuccess}
-                                                    onOpenInfoTooltip={setIsInfoTooltipOpen}/>}/>
+                                                    onOpenInfoTooltip={setIsInfoTooltipOpen}
+          />}/>
           <Route path='/'
                  element={
                    <ProtectedRouteElement
-                     isLoggedIn={isLoggedIn}
                      element={Main}
+                     isLoggedIn={isLoggedIn}
                      onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
                      onEditAvatar={handleEditAvatarClick}
                      onCardClick={handleCardClick}
@@ -176,9 +179,13 @@ function App() {
           />
         </Routes>
         <Footer/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser}
+        <EditProfilePopup isOpen={isEditProfilePopupOpen}
+                          onClose={closeAllPopups}
+                          onUpdateUser={onUpdateUser}
                           buttonText={saveText}/>
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}
+        <AddPlacePopup isOpen={isAddPlacePopupOpen}
+                       onClose={closeAllPopups}
+                       onAddPlace={handleAddPlaceSubmit}
                        isRequestSent={isRequestSent}/>
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}
                          buttonText={saveText}
@@ -188,7 +195,9 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}/>
-        <InfoTooltip isRegistrationSuccess={isRegistrationSuccess} onClose={closeAllPopups} isOpen={isInfoTooltipOpen}>
+        <InfoTooltip isRegistrationSuccess={isRegistrationSuccess}
+                     onClose={closeAllPopups}
+                     isOpen={isInfoTooltipOpen}>
         </InfoTooltip>
       </div>
     </CurrentUserContext.Provider>

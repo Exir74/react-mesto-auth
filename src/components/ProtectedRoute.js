@@ -1,5 +1,5 @@
 import React from "react";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 function ProtectedRouteElement({element: Component, ...props}) {
   if (Component !== '') {
@@ -7,9 +7,6 @@ function ProtectedRouteElement({element: Component, ...props}) {
   } else {
      return (props.isLoggedIn ? '' : <Navigate to='/sign-in' replace/>)
   }
-//   return (
-//     props.isLoggedIn ? <Component {...props}/> : <Navigate to='/sign-in' replace/>
-// )
 }
 
 export default ProtectedRouteElement

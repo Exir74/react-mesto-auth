@@ -1,13 +1,15 @@
 import logo from "../image/logo.svg";
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 function Header({isLoginPage}) {
   return (
     <header className="header">
-      <a href="/">
-        <img className="header__logo hover" src={logo} alt="лого"/>
-      </a>
+      <Link to='/'>
+        <img className="header__logo hover"
+             src={logo}
+             alt="лого"/>
+      </Link>
       <div className='header__user-wrapper'>
         <span className='header__user-email '>email@mail.com</span>
         {isLoginPage ? <Link to='/sign-up' className='header__user-action hover'>Регистрация</Link>:
