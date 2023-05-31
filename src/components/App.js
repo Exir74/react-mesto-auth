@@ -41,6 +41,7 @@ function App() {
           setIsLoggedIn(true)
           navigate('/', {replace: true})
           setUserEmail(email)
+          getCards()
         }
       })
       .catch((err)=>{
@@ -95,6 +96,7 @@ React.useEffect(()=>{
             setIsLoggedIn(true)
             setUserEmail(res.data.email)
             navigate("/", {replace: true})
+            getCards()
           } )
           .catch(err=> console.log(err))
       }
@@ -175,7 +177,24 @@ React.useEffect(()=>{
     setIsInfoTooltipOpen(false)
   }
 
-  React.useEffect(() => {
+  // React.useEffect(() => {
+  //   api.getInitialCards().then((res) => {
+  //     setCards(res)
+  //   })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  //   api.getUserInformation().then((res) => {
+  //     setCurrentUser(res)
+  //   })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }, [isLoggedIn])
+
+
+  function getCards(){
+    console.log('12')
     api.getInitialCards().then((res) => {
       setCards(res)
     })
@@ -188,7 +207,7 @@ React.useEffect(()=>{
       .catch((err) => {
         console.log(err)
       })
-  }, [isLoggedIn])
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
