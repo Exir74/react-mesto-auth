@@ -15,7 +15,6 @@ import InfoTooltip from "./InfoTooltip";
 import { Route, Routes, useNavigate} from "react-router-dom";
 import ProtectedRouteElement from "./ProtectedRoute";
 import * as auth from "../utils/auth";
-import login from "./Login";
 
 function App() {
 
@@ -32,7 +31,16 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
   const [userEmail, setUserEmail] = React.useState('')
+  const [registerPopupText, setRegisterPopupText] = React.useState('')
   const navigate = useNavigate()
+
+  function isRegistrationSuccessHandler(){
+    if (isRegistrationSuccess){
+      setRegisterPopupText('Вы успешно зарегистрировались!')
+    } else {
+      setRegisterPopupText('Что-то пошло не так! Попробуйте ещё раз.')
+    }
+  }
 
   function handleLogin(password, email){
     auth.authorize(password, email)
@@ -278,8 +286,11 @@ React.useEffect(()=>{
           onClose={closeAllPopups}/>
         <InfoTooltip isRegistrationSuccess={isRegistrationSuccess}
                      onClose={closeAllPopups}
-                     isOpen={isInfoTooltipOpen}>
-        </InfoTooltip>
+                     isOpen={isInfoTooltipOpen}
+                     isRegistrationSuccessHandler={isRegistrationSuccessHandler}
+                     PopupText={registerPopupText}
+        />
+
       </div>
     </CurrentUserContext.Provider>
   );

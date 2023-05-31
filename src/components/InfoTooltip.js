@@ -3,10 +3,12 @@ import closeIcon from "../image/Close-Icon.svg";
 import successRegistration from "../image/successRegistration.png"
 import failedRegistration from "../image/failedRegistration.png"
 
-function InfoTooltip({isRegistrationSuccess, onClose, isOpen}) {
+function InfoTooltip({isRegistrationSuccess, onClose, isOpen, isRegistrationSuccessHandler, PopupText}) {
+  React.useEffect(()=>{
+    isRegistrationSuccessHandler()
+  }, [isOpen])
   return (
     <div className={`popup image-popup ${isOpen ? 'popup_open' : ''}`}>
-      {/*Надо сделать показ попапа при успшной и не успешной регистрации*/}
       <div className="popup__content">
         <button type="button" onClick={onClose} className="popup__close hover">
           <img
@@ -21,14 +23,10 @@ function InfoTooltip({isRegistrationSuccess, onClose, isOpen}) {
                  alt={isRegistrationSuccess ? 'Вы успешно зарегистрировались!' : `Что-то пошло не так!
               Попробуйте ещё раз.`}
                  src={isRegistrationSuccess ? successRegistration : failedRegistration}/>
-            <p className='popup__registration-text'>{isRegistrationSuccess ? 'Вы успешно зарегистрировались!' : `Что-то пошло не так!
-              Попробуйте ещё раз.`}</p>
+            <p className='popup__registration-text'>{PopupText}</p>
           </div>
-          {/*<img className="popup__full-image" src={'card.link'} alt={'card.name'}/>*/}
         </div>
-        {/*<div className="popup__image-name">*/}
-        {/*  <p className="popup__image-text">{'card.name'}</p>*/}
-        {/*</div>*/}
+
       </div>
     </div>
   )
