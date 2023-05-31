@@ -6,11 +6,13 @@ function Header({isLoginPage, isLoggedIn, userEmail , setUserEmail, setIsLoggedI
 
   const [actionText, setActionText] = React.useState('Вход')
   const [actionLink, setActionLink] = React.useState('/sign-in')
-
   React.useEffect(() => {
     if (!isLoggedIn && isLoginPage) {
       setActionText('Регистрация')
       setActionLink('/sign-up')
+    } else if (!isLoggedIn && !isLoginPage) {
+      setActionText('Вход')
+      setActionLink('/sign-in')
     } else if (isLoggedIn && !isLoginPage) {
       setActionText('Выход')
       setActionLink('/sign-in')
@@ -18,10 +20,9 @@ function Header({isLoginPage, isLoggedIn, userEmail , setUserEmail, setIsLoggedI
 
   function actionLinkClick () {
     if (userEmail) {
-      localStorage.removeItem('token')
+      localStorage.removeItem('jwt')
       setUserEmail('')
       setIsLoggedIn(false)
-
     }
   }
   return (
