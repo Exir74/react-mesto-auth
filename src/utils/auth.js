@@ -29,23 +29,25 @@ export const authorize = (password, email) => {
   })
     .then((res => res.json()))
     .then((data) => {
-      if (data.token){
+      if (data.token) {
         localStorage.setItem('token', data.token);
         return data;
       }
     })
     .catch(err => console.log(err))
-    // .then((res)=>{
-    //   return res
-    // })
-    // .then(res=>{
-    //   try {
-    //     if (res.status === 200) {
-    //       return res.json()
-    //     }
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // })
+}
+
+export const checkToken = (token)=>{
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization" : `Bearer ${token}`
+    }
+    })
+    .then(res=> res.json())
+    .then(data=> data)
 
 }
+
+

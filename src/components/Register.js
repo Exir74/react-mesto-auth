@@ -3,12 +3,12 @@ import PageWithAuthorization from "./PageWithAuthorization";
 import * as auth from "../utils/auth";
 import {useNavigate} from "react-router-dom";
 
-function Register({onOpenRegister, isLoginPage, setIsRegistrationSuccess, onOpenInfoTooltip}) {
+function Register({setIsLoginPage, isLoginPage, setIsRegistrationSuccess, onOpenInfoTooltip}) {
   const navigate = useNavigate();
   const [values, setValues] = React.useState({})
 
   React.useEffect(() => {
-    onOpenRegister(false)
+    setIsLoginPage(false)
   }, [])
   const handleChange = (event) => {
     const {name, value} = event.target

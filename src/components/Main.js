@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import editAvatarImg from "../image/editAvatar.png"
 import editButtonImg from "../image/Edit-Button.svg"
 import addButtonS from "../image/Add-Button-S.svg"
@@ -7,9 +7,13 @@ import Card from "./Card";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, onCardDelete, test}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, onCardDelete, setIsLoginPage}) {
   const currentUser = React.useContext(CurrentUserContext)
-  console.log(test)
+  useEffect(()=>{
+    setIsLoginPage(false)
+
+  })
+
   return (
     <main className="main-content">
       <section className="profile">

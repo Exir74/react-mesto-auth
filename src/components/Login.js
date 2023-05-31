@@ -3,13 +3,13 @@ import PageWithAuthorization from "./PageWithAuthorization";
 import {useNavigate} from "react-router-dom";
 import * as auth from "../utils/auth";
 
-function Login({onOpenRegister, isLoginPage, handleLogin, onOpenInfoTooltip, setTest}) {
+function Login({setIsLoginPage, isLoginPage, handleLogin}) {
 
   const navigate = useNavigate();
   const [values, setValues] = React.useState({})
 
   React.useEffect(() => {
-    onOpenRegister(true)
+    setIsLoginPage(true)
   }, [])
   const handleChange = (event) => {
     const {name, value} = event.target
@@ -25,7 +25,6 @@ function Login({onOpenRegister, isLoginPage, handleLogin, onOpenInfoTooltip, set
         if (data) {
           setValues({email: '', password: ''})
           handleLogin()
-          setTest('Отредаченый')
           navigate('/', {replace: true})
         }
       })

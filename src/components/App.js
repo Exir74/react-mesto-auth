@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import '../index.css';
 import Header from "./Header";
 import Main from "./Main";
@@ -13,9 +13,9 @@ import AddPlacePopup from "./AddPlacePopup";
 import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
-import {Link, Navigate, Route, Routes} from "react-router-dom";
+import { Route, Routes, useNavigate} from "react-router-dom";
 import ProtectedRouteElement from "./ProtectedRoute";
-import ProtectedRoute from "./ProtectedRoute";
+import * as auth from "../utils/auth";
 
 function App() {
 
@@ -27,11 +27,14 @@ function App() {
   const [cards, setCards] = React.useState([])
   const [saveText, setSaveText] = React.useState('Сохранить')
   const [isRequestSent, setIsRequestSent] = React.useState(false)
-  const [isLoginPage, setIsLoginPage] = React.useState(true)
+  const [isLoginPage, setIsLoginPage] = React.useState(false)
   const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false)
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false)
-  function handleLogin(){
+  const [userEmail, setUserEmail] = React.useState('')
+  const navigate = useNavigate()
+
+  function handleLogin() {
     setIsLoggedIn(true)
   }
 
@@ -53,6 +56,23 @@ function App() {
     setSelectedCard(card)
   }
 
+React.useEffect(()=>{
+  handleTokenCheck()
+},[])
+
+  function handleTokenCheck() {
+    if (localStorage.getItem('token')){
+      const token = localStorage.getItem('token')
+      if (token){
+        auth.checkToken(token)
+          .then((res) => {
+            setIsLoggedIn(true)
+            setUserEmail(res.data.email)
+            navigate("/", {replace: true})
+          } )
+      }
+    }
+  }
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
@@ -139,18 +159,24 @@ function App() {
       })
   }, [])
 
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header isLoginPage={isLoginPage} isLoggedIn={isLoggedIn}/>
+        <Header isLoginPage={isLoginPage}
+                userEmail={userEmail}
+                isLoggedIn={isLoggedIn}
+                setUserEmail={setUserEmail}
+                setIsLoggedIn={setIsLoggedIn}
+        />
         <Routes>
           <Route path='/sign-in'
-                 element={<Login onOpenRegister={setIsLoginPage}
+                 element={<Login setIsLoginPage={setIsLoginPage}
                                  isLoginPage={isLoginPage}
                                  handleLogin={handleLogin}
                                  onOpenInfoTooltip={setIsInfoTooltipOpen}
                  />}/>
-          <Route path='/sign-up' element={<Register onOpenRegister={setIsLoginPage}
+          <Route path='/sign-up' element={<Register setIsLoginPage={setIsLoginPage}
                                                     isLoginPage={isLoginPage}
                                                     setIsRegistrationSuccess={setIsRegistrationSuccess}
                                                     onOpenInfoTooltip={setIsInfoTooltipOpen}
@@ -160,6 +186,7 @@ function App() {
                    <ProtectedRouteElement
                      element={Main}
                      isLoggedIn={isLoggedIn}
+                     setIsLoginPage={setIsLoginPage}
                      onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
                      onEditAvatar={handleEditAvatarClick}
                      onCardClick={handleCardClick}
