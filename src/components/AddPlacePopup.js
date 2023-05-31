@@ -1,10 +1,11 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent}) {
+function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent, buttonText, setSaveText}) {
   const [values, setValues] = React.useState({})
 
   React.useEffect(() => {
+    setSaveText('Создать')
     setValues({name: '', link: ''})
   }, [isOpen, isRequestSent])
 
@@ -25,7 +26,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isRequestSent}) {
   }
 
   return (
-    <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={"Создать"}
+    <PopupWithForm title={"Новое место"} name={"card-form"} buttonText={buttonText}
                    isOpen={isOpen}
                    onClose={onClose}
                    onSubmit={handleSubmit}>

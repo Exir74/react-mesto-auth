@@ -20,7 +20,7 @@ function Header({isLoginPage, isLoggedIn, userEmail , setUserEmail, setIsLoggedI
 
   function actionLinkClick () {
     if (userEmail) {
-      localStorage.removeItem('jwt')
+      localStorage.removeItem('token')
       setUserEmail('')
       setIsLoggedIn(false)
     }

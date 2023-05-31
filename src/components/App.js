@@ -1,5 +1,4 @@
 import React from "react";
-import '../index.css';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -16,6 +15,7 @@ import InfoTooltip from "./InfoTooltip";
 import { Route, Routes, useNavigate} from "react-router-dom";
 import ProtectedRouteElement from "./ProtectedRoute";
 import * as auth from "../utils/auth";
+import login from "./Login";
 
 function App() {
 
@@ -53,14 +53,15 @@ function App() {
         if (res.status === 201) {
           setIsInfoTooltipOpen(true)
           setIsRegistrationSuccess(true)
-          setTimeout(()=>setIsInfoTooltipOpen(false), 2000)
           navigate('/sign-in', {replace: true})
         } else {
           setIsRegistrationSuccess(false)
           setIsInfoTooltipOpen(true)
-          setTimeout(()=>setIsInfoTooltipOpen(false), 2000)
         }
+        setTimeout(()=>setIsInfoTooltipOpen(false), 2000)
       })
+      .catch(err=> console.log(err))
+
   }
 
   function handleEditProfileClick() {
@@ -91,11 +92,11 @@ React.useEffect(()=>{
       if (token){
         auth.checkToken(token)
           .then((res) => {
-            console.log(res.data.email)
             setIsLoggedIn(true)
             setUserEmail(res.data.email)
             navigate("/", {replace: true})
           } )
+          .catch(err=> console.log(err))
       }
     }
   }
@@ -122,6 +123,7 @@ React.useEffect(()=>{
   }
 
   function handleAddPlaceSubmit({name, link}) {
+    setSaveText('Создание...')
     api.addUserCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards])
@@ -130,6 +132,9 @@ React.useEffect(()=>{
       })
       .catch((err) => {
         console.log(err)
+      })
+      .finally(()=>{
+        setSaveText('Создать')
       })
   }
 
@@ -183,8 +188,7 @@ React.useEffect(()=>{
       .catch((err) => {
         console.log(err)
       })
-  }, [])
-
+  }, [isLoggedIn])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -233,14 +237,21 @@ React.useEffect(()=>{
         <EditProfilePopup isOpen={isEditProfilePopupOpen}
                           onClose={closeAllPopups}
                           onUpdateUser={onUpdateUser}
-                          buttonText={saveText}/>
+                          buttonText={saveText}
+        />
         <AddPlacePopup isOpen={isAddPlacePopupOpen}
                        onClose={closeAllPopups}
                        onAddPlace={handleAddPlaceSubmit}
-                       isRequestSent={isRequestSent}/>
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar}
+                       isRequestSent={isRequestSent}
+                       buttonText={saveText}
+                       setSaveText={setSaveText}
+        />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
+                         onClose={closeAllPopups}
+                         onUpdateAvatar={onUpdateAvatar}
                          buttonText={saveText}
-                         isRequestSent={isRequestSent}/>
+                         isRequestSent={isRequestSent}
+        />
         <PopupWithForm title={"Вы уверены?"} name={"confirm-form"} buttonText={"Да"}>
         </PopupWithForm>
         <ImagePopup
