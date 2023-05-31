@@ -1,10 +1,8 @@
 import React from "react";
 import PageWithAuthorization from "./PageWithAuthorization";
-import * as auth from "../utils/auth";
-import {useNavigate} from "react-router-dom";
+
 
 function Register({setIsLoginPage, isLoginPage, handleRegister}) {
-  const navigate = useNavigate();
   const [values, setValues] = React.useState({})
 
   React.useEffect(() => {

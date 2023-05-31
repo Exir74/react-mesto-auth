@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import '../index.css';
 import Header from "./Header";
 import Main from "./Main";

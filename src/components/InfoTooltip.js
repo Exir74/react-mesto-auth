@@ -18,6 +18,8 @@ function InfoTooltip({isRegistrationSuccess, onClose, isOpen}) {
         <div className="popup__success">
           <div className="popup__body">
             <img className='popup__registration-img'
+                 alt={isRegistrationSuccess ? 'Вы успешно зарегистрировались!' : `Что-то пошло не так!
+              Попробуйте ещё раз.`}
                  src={isRegistrationSuccess ? successRegistration : failedRegistration}/>
             <p className='popup__registration-text'>{isRegistrationSuccess ? 'Вы успешно зарегистрировались!' : `Что-то пошло не так!
               Попробуйте ещё раз.`}</p>
