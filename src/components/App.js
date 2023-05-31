@@ -12,7 +12,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
-import { Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import ProtectedRouteElement from "./ProtectedRoute";
 import * as auth from "../utils/auth";
 
@@ -34,17 +34,17 @@ function App() {
   const [registerPopupText, setRegisterPopupText] = React.useState('')
   const navigate = useNavigate()
 
-  function isRegistrationSuccessHandler(){
-    if (isRegistrationSuccess){
+  function isRegistrationSuccessHandler() {
+    if (isRegistrationSuccess) {
       setRegisterPopupText('Вы успешно зарегистрировались!')
     } else {
       setRegisterPopupText('Что-то пошло не так! Попробуйте ещё раз.')
     }
   }
 
-  function handleLogin(password, email){
+  function handleLogin(password, email) {
     auth.authorize(password, email)
-      .then(data=>{
+      .then(data => {
         if (data) {
           setIsLoggedIn(true)
           navigate('/', {replace: true})
@@ -52,11 +52,12 @@ function App() {
           getCards()
         }
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err)
       })
   }
-  function handleRegister(password, email){
+
+  function handleRegister(password, email) {
     auth.register(password, email)
       .then((res) => {
         if (res.status === 201) {
@@ -67,9 +68,9 @@ function App() {
           setIsRegistrationSuccess(false)
           setIsInfoTooltipOpen(true)
         }
-        setTimeout(()=>setIsInfoTooltipOpen(false), 2000)
+        setTimeout(() => setIsInfoTooltipOpen(false), 2000)
       })
-      .catch(err=> console.log(err))
+      .catch(err => console.log(err))
 
   }
 
@@ -91,25 +92,26 @@ function App() {
     setSelectedCard(card)
   }
 
-React.useEffect(()=>{
-  handleTokenCheck()
-},[])
+  React.useEffect(() => {
+    handleTokenCheck()
+  }, [])
 
   function handleTokenCheck() {
-    if (localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token')
-      if (token){
+      if (token) {
         auth.checkToken(token)
           .then((res) => {
             setIsLoggedIn(true)
             setUserEmail(res.data.email)
             navigate("/", {replace: true})
             getCards()
-          } )
-          .catch(err=> console.log(err))
+          })
+          .catch(err => console.log(err))
       }
     }
   }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
@@ -143,7 +145,7 @@ React.useEffect(()=>{
       .catch((err) => {
         console.log(err)
       })
-      .finally(()=>{
+      .finally(() => {
         setSaveText('Создать')
       })
   }
@@ -185,24 +187,7 @@ React.useEffect(()=>{
     setIsInfoTooltipOpen(false)
   }
 
-  // React.useEffect(() => {
-  //   api.getInitialCards().then((res) => {
-  //     setCards(res)
-  //   })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  //   api.getUserInformation().then((res) => {
-  //     setCurrentUser(res)
-  //   })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [isLoggedIn])
-
-
-  function getCards(){
-    console.log('12')
+  function getCards() {
     api.getInitialCards().then((res) => {
       setCards(res)
     })
