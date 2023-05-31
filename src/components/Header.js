@@ -1,18 +1,16 @@
 import logo from "../image/logo.svg";
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, use} from "react-router-dom";
 
 function Header({isLoginPage, isLoggedIn, userEmail , setUserEmail, setIsLoggedIn}) {
 
   const [actionText, setActionText] = React.useState('Вход')
   const [actionLink, setActionLink] = React.useState('/sign-in')
+
   React.useEffect(() => {
     if (!isLoggedIn && isLoginPage) {
       setActionText('Регистрация')
       setActionLink('/sign-up')
-    } else if (!isLoggedIn && !isLoginPage) {
-      setActionText('Вход')
-      setActionLink('/sign-in')
     } else if (isLoggedIn && !isLoginPage) {
       setActionText('Выход')
       setActionLink('/sign-in')
@@ -20,9 +18,10 @@ function Header({isLoginPage, isLoggedIn, userEmail , setUserEmail, setIsLoggedI
 
   function actionLinkClick () {
     if (userEmail) {
-      localStorage.removeItem('jwt')
+      localStorage.removeItem('token')
       setUserEmail('')
       setIsLoggedIn(false)
+
     }
   }
   return (

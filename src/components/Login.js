@@ -1,11 +1,7 @@
 import React from "react";
 import PageWithAuthorization from "./PageWithAuthorization";
-import {useNavigate} from "react-router-dom";
-import * as auth from "../utils/auth";
 
-function Login({setIsLoginPage, isLoginPage, handleLogin}) {
-
-  const navigate = useNavigate();
+function Login({setIsLoginPage, isLoginPage, handleLogin }) {
   const [values, setValues] = React.useState({})
 
   React.useEffect(() => {
@@ -20,17 +16,7 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth.authorize(values.password, values.email)
-      .then(data=>{
-        if (data) {
-          setValues({email: '', password: ''})
-          handleLogin()
-          navigate('/', {replace: true})
-        }
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
+    handleLogin(values.password, values.email)
   }
 
 

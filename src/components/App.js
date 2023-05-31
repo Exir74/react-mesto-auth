@@ -34,8 +34,33 @@ function App() {
   const [userEmail, setUserEmail] = React.useState('')
   const navigate = useNavigate()
 
-  function handleLogin() {
-    setIsLoggedIn(true)
+  function handleLogin(password, email){
+    auth.authorize(password, email)
+      .then(data=>{
+        if (data) {
+          setIsLoggedIn(true)
+          navigate('/', {replace: true})
+          setUserEmail(email)
+        }
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+  }
+  function handleRegister(password, email){
+    auth.register(password, email)
+      .then((res) => {
+        if (res.status === 201) {
+          setIsInfoTooltipOpen(true)
+          setIsRegistrationSuccess(true)
+          setTimeout(()=>setIsInfoTooltipOpen(false), 2000)
+          navigate('/sign-in', {replace: true})
+        } else {
+          setIsRegistrationSuccess(false)
+          setIsInfoTooltipOpen(true)
+          setTimeout(()=>setIsInfoTooltipOpen(false), 2000)
+        }
+      })
   }
 
   function handleEditProfileClick() {
@@ -66,6 +91,7 @@ React.useEffect(()=>{
       if (token){
         auth.checkToken(token)
           .then((res) => {
+            console.log(res.data.email)
             setIsLoggedIn(true)
             setUserEmail(res.data.email)
             navigate("/", {replace: true})
@@ -174,12 +200,10 @@ React.useEffect(()=>{
                  element={<Login setIsLoginPage={setIsLoginPage}
                                  isLoginPage={isLoginPage}
                                  handleLogin={handleLogin}
-                                 onOpenInfoTooltip={setIsInfoTooltipOpen}
                  />}/>
           <Route path='/sign-up' element={<Register setIsLoginPage={setIsLoginPage}
                                                     isLoginPage={isLoginPage}
-                                                    setIsRegistrationSuccess={setIsRegistrationSuccess}
-                                                    onOpenInfoTooltip={setIsInfoTooltipOpen}
+                                                    handleRegister={handleRegister}
           />}/>
           <Route path='/'
                  element={
