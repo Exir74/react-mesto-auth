@@ -2,25 +2,31 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
 
-const useValidation =(value, validations)=>{
-  const [isEmpty, setIsEmpty] =useState(true)
+const useValidation = (value, validations) => {
+  const [isEmpty, setIsEmpty] = useState(true)
   const [minLengthError, setMinLengthError] = useState(false)
+  const [isEmailError, setIsEmailError] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     for (const validation in validations) {
-      switch (validation){
+      switch (validation) {
         case 'minLength':
-          value.length<validations[validation] ? (setMinLengthError(true)) : setMinLengthError(false)
+          value.length < validations[validation] ? (setMinLengthError(true)) : setMinLengthError(false)
           break;
         case 'isEmpty':
-          value ? setIsEmpty(false) : setIsEmpty(true)
+          value ? setIsEmpty(false) : (setIsEmpty(true))
           break;
+        case  'isEmail' :
+          const re =
+            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+          re.test(String(value).toLowerCase()) ? setIsEmailError(false) : setIsEmailError(true)
       }
     }
   })
-  return{
+  return {
     isEmpty,
-    minLengthError
+    minLengthError,
+    isEmailError
   }
 }
 
@@ -28,9 +34,10 @@ const useValidation =(value, validations)=>{
 const useInput = (initialValue, validations) => {
   const [value, setValue] = useState(initialValue)
   const [isDirty, setIsDirty] = useState(false)
-  const [errorMessage, setErrorMessage] = useState()
+  const [errorMessage, setErrorMessage] = useState('')
   //ниже строка для вызова хука, но я и так в хуке ВОПРОСЫ!!!
-  const valid = useValidation(value, validations, errorMessage)
+  const valid =
+    useValidation(value, validations, errorMessage)
   const onChange = (e) => {
     setValue(e.target.value)
     setErrorMessage(e.target.validationMessage)
@@ -50,9 +57,12 @@ const useInput = (initialValue, validations) => {
 
 
 function Login({setIsLoginPage, isLoginPage, handleLogin}) {
+
+
   const email = useInput('', {
     isEmpty: true,
-    minLength: 3
+    minLength: 3,
+    isEmail: true
   })
   const password = useInput('', {
     isEmpty: true,
@@ -97,9 +107,12 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
       >
         <h3 className="authorization__title">Войти</h3>
         <input
-          onChange={e=> email.onChange(e)}
-          onBlur={e=>email.onBlur(e)}
-          className="authorization__input popup__input_type_email"
+          onChange={e => email.onChange(e)}
+          onBlur={e => email.onBlur(e)}
+          // className="authorization__input authorization__input_type_error"
+          className={`authorization__input ${(email.isDirty && (email.isEmpty || email.minLengthError || email.isEmailError))
+            ? 'authorization__input_type_error'
+            : ''}`}
           name="email"
           id="email-input"
           placeholder="Email"
@@ -113,16 +126,18 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
             htmlFor="name-input"
             className={`popup__error-message ${(email.isDirty && (email.isEmpty || email.minLengthError))
               ? 'popup__error_visible'
-              : '' }`}
+              : ''}`}
             id="name-input-error"
           >
             {emailError}
           </label>
         </div>
         <input
-          onChange={e=> password.onChange(e)}
-          onBlur={e=>password.onBlur(e)}
-          className="authorization__input popup__input_type_password"
+          onChange={e => password.onChange(e)}
+          onBlur={e => password.onBlur(e)}
+          className={`authorization__input ${(password.isDirty && (password.isEmpty || password.minLengthError))
+            ? 'authorization__input_type_error'
+            : ''}`}
           name="password"
           id="password-input"
           placeholder="Пароль"
@@ -138,7 +153,7 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
             htmlFor="subtitle-input"
             className={`popup__error-message ${(password.isDirty && (password.isEmpty || password.minLengthError))
               ? 'popup__error_visible'
-              : '' }`}
+              : ''}`}
             id="subtitle-input-error"
           >
             {passwordError}
