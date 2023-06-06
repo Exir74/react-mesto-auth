@@ -2,31 +2,59 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
 
-const useValidation = (value, validations) => {
+const useValidation = (value, validations ,validity) => {
   const [isEmpty, setIsEmpty] = useState(true)
   const [minLengthError, setMinLengthError] = useState(false)
   const [isEmailError, setIsEmailError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     for (const validation in validations) {
       switch (validation) {
         case 'minLength':
-          value.length < validations[validation] ? (setMinLengthError(true)) : setMinLengthError(false)
+          if (value.length < validations[validation]) {
+            setMinLengthError(true)
+          } else {
+            setMinLengthError(false)
+          }
           break;
         case 'isEmpty':
-          value ? setIsEmpty(false) : (setIsEmpty(true))
+          if (value) {
+            setIsEmpty(false)
+          } else {
+            setIsEmpty(true)
+          }
           break;
         case  'isEmail' :
           const re =
-            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-          re.test(String(value).toLowerCase()) ? setIsEmailError(false) : setIsEmailError(true)
+            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{3,})$/i;
+          if (re.test(String(value).toLowerCase())) {
+            setIsEmailError(false)
+          } else {
+            setIsEmailError(true)
+          }
+          break;
+      }
+
+      if (minLengthError) {
+        setErrorMessage(`Длина дожна быть длинее ${validations.minLength} символов `)
+
+      } else if (isEmpty) {
+        setErrorMessage('Поле не может быть пустым')
+
+      } else if (isEmailError) {
+        setErrorMessage('Введите корректный email')
       }
     }
-  })
+
+  }, [value])
+
   return {
     isEmpty,
     minLengthError,
-    isEmailError
+    isEmailError,
+    errorMessage,
+    validity
   }
 }
 
@@ -34,24 +62,26 @@ const useValidation = (value, validations) => {
 const useInput = (initialValue, validations) => {
   const [value, setValue] = useState(initialValue)
   const [isDirty, setIsDirty] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [validity, setValidity] =useState()
   //ниже строка для вызова хука, но я и так в хуке ВОПРОСЫ!!!
   const valid =
-    useValidation(value, validations, errorMessage)
+    useValidation(value, validations, validity)
   const onChange = (e) => {
     setValue(e.target.value)
-    setErrorMessage(e.target.validationMessage)
+    setValidity(e.target.validity.valid)
   }
   const onBlur = (e) => {
     setIsDirty(true)
   }
+
+
   return {
     value,
     onChange,
     onBlur,
     ...valid,
     isDirty,
-    errorMessage: errorMessage
+    errorMessage: valid.errorMessage
   }
 }
 
@@ -71,7 +101,6 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
 
   const emailError = email.errorMessage
   const passwordError = password.errorMessage
-
   // const [values, setValues] = React.useState({})
   //
   // React.useEffect(() => {
@@ -96,6 +125,10 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
     e.preventDefault();
     handleLogin(password.value, email.value)
   }
+
+  // useEffect(()=>{
+  //   console.log(emailError)
+  // },)
 
   return (
     <div className='authorization'>
@@ -124,7 +157,8 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
         <div className={`popup__error-wrapper`}>
           <label
             htmlFor="name-input"
-            className={`popup__error-message ${(email.isDirty && (email.isEmpty || email.minLengthError))
+            className={`popup__error-message ${(email.isDirty && (email.isEmpty 
+              || email.minLengthError || email.isEmailError))
               ? 'popup__error_visible'
               : ''}`}
             id="name-input-error"
@@ -159,7 +193,7 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
             {passwordError}
           </label>
         </div>
-        <button type="submit" className="authorization__button">
+        <button type="submit" className={`authorization__button ${(!email.validity||!password.validity) ? 'popup__button_disabled':''}`} >
           {`${isLoginPage ? 'Войти' : 'Зарегистрироваться'}`}
         </button>
       </form>
