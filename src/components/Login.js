@@ -75,7 +75,6 @@ const useInput = (initialValue, validations) => {
 
   }
 
-
   return {
     value,
     onChange,
