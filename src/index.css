@@ -67,3 +67,4 @@
 @import url(blocks/popup/__registration-img/popup__registration-img.css);
 @import url(blocks/popup/__registration-text/popup__registration-text.css);
 @import url(blocks/authorization/__input/_type/authorization__input_type_error.css);
+@import url(blocks/authorization/__error-wrapper/authorization__error-wrapper.css);

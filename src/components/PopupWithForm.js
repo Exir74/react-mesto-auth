@@ -3,7 +3,7 @@ import React from "react";
 
 function PopupWithForm({name, isOpen, onClose, title, buttonText, children, onSubmit}) {
   return (
-    <div className={`popup popup_type_${name} ${isOpen ? 'popup_open' : ''}`}>
+          <div className={`popup popup_type_${name} ${isOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">
         <button type="button" onClick={onClose} className="popup__close hover">
           <img
