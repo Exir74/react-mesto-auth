@@ -9,7 +9,6 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: {errors}
   } = useForm({
     mode: "onChange"
@@ -95,9 +94,7 @@ function Login({setIsLoginPage, isLoginPage, handleLogin}) {
         {`${isLoginPage ? 'Войти' : 'Зарегистрироваться'}`}
         </button>
       </form>
-      <Link to='/sign-in' className={`authorization__sign-in ${isLoginPage ? 'authorization__sign-in_disabled' : ''}`}
-            href='#'>Уже
-        зарегистрированы? Войти</Link>
+
     </div>
   )
 }

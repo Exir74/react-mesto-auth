@@ -1,92 +1,91 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import useInput from "../utils/hooks/useInput";
-
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
 
 function Register({setIsLoginPage, isLoginPage, handleRegister}) {
-  // const [values, setValues] = React.useState({})
-  const email = useInput('', {
-    isEmpty: true,
-    minLength: 3,
-    isEmail: true
-  })
-  const password = useInput('', {
-    isEmpty: true,
-    minLength: 6
-  })
-  const emailError = email.errorMessage
-  const passwordError = password.errorMessage
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors}
+  } = useForm({
+    mode: "onChange"
+  });
 
   React.useEffect(() => {
     setIsLoginPage(false)
   }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleRegister(password.value, email.value)
+  const onSubmit = (data) => {
+    handleRegister(data.password, data.email)
   }
 
   return (
     <div className='authorization'>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         method="get"
         name='sign-up'
         className="authorization__form"
       >
         <h3 className="authorization__title">Регистрация</h3>
         <input
-          onChange={e => email.onChange(e)}
-          onBlur={e => email.onBlur(e)}
-          className={`authorization__input ${(email.isDirty && (email.isEmpty || email.minLengthError || email.isEmailError))
-            ? 'authorization__input_type_error'
-            : ''}`}
+          className={`authorization__input ${errors.email ? 'authorization__input_type_error':''}`}
           name="email"
           id="email-input"
           placeholder="Email"
           autoComplete='email'
           type="email"
-          value={email.value}
-          required
+          {...register("email", {
+            required: "Заполните это поле",
+            minLength: {
+              value: 3,
+              message: 'Длина поля менее 3 символов'
+            }, maxLength: {
+              value: 50,
+              message: 'Длина не более 50 символов'
+            }, pattern: {
+              value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+              message: 'Введите корректный email'
+            }
+          })}
         />
-        <div className="authorization__error-wrapper">
-          <label
-            htmlFor="name-input"
-            className={`popup__error-message ${(email.isDirty && (email.isEmpty
-              || email.minLengthError || email.isEmailError))
-              ? 'popup__error_visible'
-              : ''}`}
-            id="name-input-error"
-          >
-            {emailError}
-          </label>
+        <div className={`authorization__error-wrapper`}>
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({message}) => <label
+              className={'popup__error-message popup__error_visible'}
+            >{message}</label>}/>
         </div>
+
         <input
-          onChange={e => password.onChange(e)}
-          onBlur={e => password.onBlur(e)}
-          className={`authorization__input ${(password.isDirty && (password.isEmpty || password.minLengthError))
-            ? 'authorization__input_type_error'
-            : ''}`}
+
+          className={`authorization__input ${errors.password ? 'authorization__input_type_error':''}`}
           name="password"
           id="password-input"
           placeholder="Пароль"
           autoComplete='current-password'
           type="password"
-          value={password.value}
-          required
-          minLength={6}
-          maxLength={10}
+          {...register("password", {
+            required: "Заполните это поле",
+            minLength: {
+              value: 6,
+              message: 'Длина поля менее 6 символов'
+            }, maxLength: {
+              value: 12,
+              message: 'Длина не более 12 символов'
+            },
+          })}
         />
-        <div className="authorization__error-wrapper">
-          <label
-            htmlFor="subtitle-input"
-            className={`popup__error-message ${(password.isDirty && (password.isEmpty || password.minLengthError))
-              ? 'popup__error_visible'
-              : ''}`}
-            id="subtitle-input-error"
-          >
-            {passwordError}
-          </label>
+        <div className={`authorization__error-wrapper`}>
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({message}) => <label
+              className={'popup__error-message popup__error_visible'}
+            >{message}</label>}/>
         </div>
         <button type="submit" className="authorization__button">
           {`${isLoginPage ? 'Войти' : 'Зарегистрироваться'}`}
