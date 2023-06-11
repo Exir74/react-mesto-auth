@@ -1,9 +1,16 @@
 import closeIcon from "../image/Close-Icon.svg";
 import React from "react";
+import { useForm } from "react-hook-form";
 
-function PopupWithForm({name, isOpen, onClose, title, buttonText, children, onSubmit}) {
+function PopupWithForm({name, isOpen, onClose, title, buttonText, children, onSubmit, handleSubmit}) {
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   watch,
+  //   formState: { errors }
+  // } = useForm();
   return (
-          <div className={`popup popup_type_${name} ${isOpen ? 'popup_open' : ''}`}>
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_open' : ''}`}>
       <div className="popup__content">
         <button type="button" onClick={onClose} className="popup__close hover">
           <img
@@ -13,7 +20,7 @@ function PopupWithForm({name, isOpen, onClose, title, buttonText, children, onSu
           />
         </button>
         <form
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           method="get"
           name={name}
           className="popup__form"
