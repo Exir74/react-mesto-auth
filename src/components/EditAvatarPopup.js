@@ -17,6 +17,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, buttonText, isRequest
   // }
 
   const test = () =>{
+    console.log('123')
     handleSubmit(onSubmit)
   }
 

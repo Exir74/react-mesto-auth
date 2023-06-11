@@ -27,9 +27,9 @@ function PopupWithForm({name, isOpen, onClose, title, buttonText, children, onSu
         >
           <h3 className="popup__title">{title}</h3>
           {children}
-          <button type="submit" className="popup__button">
-            {buttonText}
-          </button>
+          <input type="submit" className="popup__button" />
+          {/*  {buttonText}*/}
+          {/*</button>*/}
         </form>
       </div>
     </div>
